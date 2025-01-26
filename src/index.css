@@ -8,10 +8,13 @@ a.active hr {
   display: block;
 }
 
-body,
-html {
-  overflow-x: hidden;
-  margin: 0; /* Ensure no default margin */
+html,
+body {
+  overflow-x: hidden; /* Disable horizontal scrolling */
+  margin: 0; /* Remove default margins */
+  padding: 0; /* Ensure no padding on the edges */
+  width: 100%; /* Ensure the elements span the full viewport width */
+  height: 100%; /* Keep height consistent */
 }
 
 * {
