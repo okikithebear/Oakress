@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import Title from "./Title";
-// import ProductItem from "../Components/ProductItem";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation, Autoplay } from "swiper/modules"; // Import Autoplay for auto-sliding
+import { Navigation, Autoplay } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 
 // Function to format currency with Naira symbol and commas
@@ -16,17 +15,17 @@ const formatCurrency = (amount) => {
 const LatestCollection = () => {
   const { products } = useContext(ShopContext);
   const [latestProducts, setLatestProducts] = useState([]);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (products?.length) {
-      setLatestProducts(products.slice(0, 10)); // Adjust to get the desired number of products
+      setLatestProducts(products.slice(0, 10)); // Get the latest 10 products
     }
   }, [products]);
 
-  // Function to handle product click
+  // Handle product click
   const handleProductClick = (productId) => {
-    navigate(`/product/${productId}`); // Navigate to product detail page
+    navigate(`/product/${productId}`);
   };
 
   return (
@@ -42,7 +41,7 @@ const LatestCollection = () => {
       {/* Scrollable Product Collection */}
       <div className="relative overflow-hidden">
         <Swiper
-          modules={[Navigation, Autoplay]} // Added Autoplay module
+          modules={[Navigation, Autoplay]} 
           navigation={{
             prevEl: ".swiper-button-prev",
             nextEl: ".swiper-button-next",
@@ -52,15 +51,9 @@ const LatestCollection = () => {
           slidesPerView={3}
           loop={true}
           breakpoints={{
-            375: {
-              slidesPerView: 1, // 1 slide for screens >= 640px
-            },
-            768: {
-              slidesPerView: 3, // 2 slides for screens >= 768px
-            },
-            1024: {
-              slidesPerView: 4, // 3 slides for screens >= 1024px
-            },
+            375: { slidesPerView: 1 }, // 1 slide for screens >= 375px
+            768: { slidesPerView: 3 }, // 3 slides for screens >= 768px
+            1024: { slidesPerView: 4 }, // 4 slides for screens >= 1024px
           }}
           className="product-carousel"
         >
@@ -69,9 +62,9 @@ const LatestCollection = () => {
               <SwiperSlide key={index} className="group relative">
                 <div
                   className="relative w-full bg-white cursor-pointer overflow-hidden rounded-lg"
-                  onClick={() => handleProductClick(item._id)} // Add click handler
+                  onClick={() => handleProductClick(item._id)} // Navigate to product details
                 >
-                  {/* Image */}
+                  {/* Product Image */}
                   <div className="relative w-full h-[500px] sm:h-[350px] lg:h-[400px]">
                     <img
                       src={item.image}
@@ -81,18 +74,17 @@ const LatestCollection = () => {
                   </div>
 
                   {/* Product Info */}
-                  <div className="p-4 text-start bg-gray-200 rounded-b-lg shadow-md">
+                  <div className="p-4 bg-gray-200 rounded-b-lg shadow-md">
                     <p className="text-lg font-semibold text-gray-800">{item.name}</p>
                     <p className="text-base text-purple-600 mt-1">{item.type}</p>
-                    <p className="text-xl font-bold text-gray-900 mt-2">
-                      {formatCurrency(item.price)}
-                    </p>
+                    <p className="text-xl font-bold text-gray-900 mt-2">{formatCurrency(item.price)}</p>
                   </div>
                 </div>
               </SwiperSlide>
             ))
           ) : (
             <div className="col-span-full text-center text-gray-500">
+              {/* Loading Spinner */}
               <p>Loading the latest collections...</p>
             </div>
           )}
