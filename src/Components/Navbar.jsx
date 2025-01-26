@@ -16,11 +16,11 @@ import {
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
   }, [isMobileMenuOpen]);
-  
 
   const navLinks = [
     { path: "/", label: "Home", icon: faHome },
@@ -64,23 +64,23 @@ const Navbar = () => {
         />
 
         {/* Profile Icon */}
-        <div className="group relative">
+        <div className="relative">
           <FontAwesomeIcon
             icon={faUserCircle}
             className="w-5 cursor-pointer"
             aria-label="Profile"
+            onClick={() => setProfileMenuOpen(!isProfileMenuOpen)}
           />
-          <div
-            className="group-hover:block hidden absolute dropdown-menu right-0 pt-4"
-            role="menu"
-            aria-hidden={!isMobileMenuOpen}
-          >
-            <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
+          {isProfileMenuOpen && (
+            <div
+              className="absolute right-0 mt-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded shadow-lg"
+              role="menu"
+            >
               <p className="cursor-pointer hover:text-black">My Profile</p>
               <p className="cursor-pointer hover:text-black">Orders</p>
               <p className="cursor-pointer hover:text-black">Logout</p>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Cart Icon */}
@@ -94,30 +94,20 @@ const Navbar = () => {
         {/* Mobile Menu Icon */}
         <FontAwesomeIcon
           onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-          icon={faBars}
+          icon={isMobileMenuOpen ? faTimes : faBars}
           className="w-5 cursor-pointer sm:hidden"
-          aria-label="Open Menu"
+          aria-label="Toggle Menu"
         />
       </div>
 
       {/* Mobile Navigation Menu */}
       <div
-        className={`absolute top-0 right-0 bottom-0 bg-white transition-transform duration-300 shadow-lg ${
+        className={`fixed top-0 right-0 bottom-0 bg-white transition-transform duration-300 shadow-lg z-50 ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } w-3/4 sm:w-1/2`}
         role="menu"
         aria-hidden={!isMobileMenuOpen}
       >
-        {/* Close Button */}
-        <button
-          onClick={() => setMobileMenuOpen(false)}
-          className="absolute top-4 right-4 text-gray-700 p-2 bg-gray-100 rounded-full shadow-md hover:bg-gray-200"
-          aria-label="Close Menu"
-        >
-          <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
-        </button>
-
-        {/* Mobile Navigation Links */}
         <ul className="flex flex-col gap-6 p-8 text-base text-gray-800">
           {navLinks.map(({ path, label, icon }) => (
             <NavLink
