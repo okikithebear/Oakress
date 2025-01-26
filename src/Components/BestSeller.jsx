@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Title from "./Title";
 import { ShopContext } from "../Context/ShopContext"; // Ensure the ShopContext is imported
-import ProductItem from "./ProductItem";
+import ProductItem from "../Components/Productitem";
 
 const BestSeller = () => {
   const { products } = useContext(ShopContext); // Corrected useContext
@@ -13,7 +13,7 @@ const BestSeller = () => {
   }, [products]); // Add products to the dependency array to ensure it re-renders when the products change
 
   return (
-    <div className="my-10 bg-gradient-to-b from-gray-50 to-white  py-8 mb-20">
+    <div className="my-10 bg-gradient-to-b from-gray-50 to-white">
       {/* Section Title */}
       <div className="text-center text-2xl py-8">
         <Title text1={"BEST"} text2={"SELLER"} />
