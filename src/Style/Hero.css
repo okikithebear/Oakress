@@ -1,0 +1,21 @@
+.hero-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image {
+  animation: flipEffect 5s infinite alternate; /* Adjust the animation timing */
+  transform-origin: right center; /* The image will "flip" around the right edge */
+}
+
+@keyframes flipEffect {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
