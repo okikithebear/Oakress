@@ -1,50 +1,138 @@
-import { useContext, useEffect, useState } from "react";
-import Title from "./Title";
-import { ShopContext } from "../Context/ShopContext"; // Ensure the ShopContext is imported
-import ProductItem from "../Components/Productitem";
+import { useState } from "react";
+import { assets } from "../assets/assets";
+import { Link, NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSearch,
+  faUserCircle,
+  faShoppingCart,
+  faBars,
+  faTimes,
+  faHome,
+  faInfoCircle,
+  faBox,
+  faEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
 
-const BestSeller = () => {
-  const { products } = useContext(ShopContext); // Corrected useContext
-  const [bestSeller, setBestSeller] = useState([]);
+const Navbar = () => {
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const bestProduct = products.filter((item) => item.bestseller);
-    setBestSeller(bestProduct.slice(0, 5)); // Set bestSeller with top 5 products
-  }, [products]); // Add products to the dependency array to ensure it re-renders when the products change
+  const navLinks = [
+    { path: "/", label: "Home", icon: faHome },
+    { path: "/about", label: "About", icon: faInfoCircle },
+    { path: "/collection", label: "Collection", icon: faBox },
+    { path: "/contact", label: "Contact", icon: faEnvelope },
+  ];
 
   return (
-    <div className="my-10 bg-gradient-to-b from-gray-50 to-white py-20">
-      {/* Section Title */}
-      <div className="text-center text-2xl py-8">
-        <Title text1={"BEST"} text2={"SELLER"} />
-        <p className="w-3/4 m-auto text-sm md:text-base text-gray-600">
-          Discover our top-selling products that our customers love. These items are popular for their quality, style, and performance. Don’t miss out on these top picks!
-        </p>
-      </div>
+    <div className="flex items-center justify-between py-5 font-medium">
+      {/* Logo */}
+      <Link to="/">
+        <img src={assets.logo} alt="Logo" className="w-36" />
+      </Link>
 
-      {/* Product Grid */}
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-          {bestSeller.map((item, index) => (
-            <ProductItem
-              key={index}
-              id={item._id}
-              name={item.name}
-              image={item.image}
-              price={item.price}
-            />
-          ))}
+      {/* Navigation Links */}
+      <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
+        {navLinks.map(({ path, label }) => (
+          <NavLink
+            key={label}
+            to={path}
+            className={({ isActive }) =>
+              `flex flex-col items-center gap-1 ${
+                isActive ? "text-indigo-600" : ""
+              }`
+            }
+          >
+            <p>{label.toUpperCase()}</p>
+            <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
+          </NavLink>
+        ))}
+      </ul>
+
+      {/* Icons and Mobile Menu */}
+      <div className="flex items-center gap-6">
+        {/* Search Icon */}
+        <FontAwesomeIcon
+          icon={faSearch}
+          className="w-5 cursor-pointer"
+          aria-label="Search"
+        />
+
+        {/* Profile Icon */}
+        <div className="group relative">
+          <FontAwesomeIcon
+            icon={faUserCircle}
+            className="w-5 cursor-pointer"
+            aria-label="Profile"
+          />
+          <div
+            className="group-hover:block hidden absolute dropdown-menu right-0 pt-4"
+            role="menu"
+            aria-hidden={!isMobileMenuOpen}
+          >
+            <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
+              <p className="cursor-pointer hover:text-black">My Profile</p>
+              <p className="cursor-pointer hover:text-black">Orders</p>
+              <p className="cursor-pointer hover:text-black">Logout</p>
+            </div>
+          </div>
         </div>
+
+        {/* Cart Icon */}
+        <Link to="/cart" className="relative" aria-label="Cart">
+          <FontAwesomeIcon icon={faShoppingCart} className="w-5 min-w-5" />
+          <p className="absolute right-[-5px] bottom-[-5px] w-4 h-4 flex items-center justify-center bg-black text-white text-xs rounded-full">
+            10
+          </p>
+        </Link>
+
+        {/* Mobile Menu Icon */}
+        <FontAwesomeIcon
+          onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+          icon={faBars}
+          className="w-5 cursor-pointer sm:hidden"
+          aria-label="Open Menu"
+        />
       </div>
 
-      {/* Call-to-Action */}
-      {/* <div className="text-center py-6">
-        <button className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition-all duration-300">
-          View All Best Sellers
+      {/* Mobile Navigation Menu */}
+      <div
+        className={`absolute top-0 right-0 bottom-0 bg-white transition-transform duration-300 shadow-lg ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        } w-3/4 sm:w-1/2`}
+        role="menu"
+        aria-hidden={!isMobileMenuOpen}
+      >
+        {/* Close Button */}
+        <button
+          onClick={() => setMobileMenuOpen(false)}
+          className="absolute top-4 right-4 text-gray-700 p-2 bg-gray-100 rounded-full shadow-md hover:bg-gray-200"
+          aria-label="Close Menu"
+        >
+          <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
         </button>
-      </div> */}
+
+        {/* Mobile Navigation Links */}
+        <ul className="flex flex-col gap-6 p-8 text-base text-gray-800">
+          {navLinks.map(({ path, label, icon }) => (
+            <NavLink
+              key={label}
+              to={path}
+              onClick={() => setMobileMenuOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-3 font-medium hover:text-indigo-600 transition-all ${
+                  isActive ? "text-indigo-600" : ""
+                }`
+              }
+            >
+              <FontAwesomeIcon icon={icon} className="w-5 h-5" />
+              {label}
+            </NavLink>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
 
-export default BestSeller;
+export default Navbar;
