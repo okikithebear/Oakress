@@ -9,6 +9,8 @@ import Login from './Pages/Login'
 import PlaceOrder from './Pages/PlaceOrder'
 import Orders from './Pages/Orders'
 import Navbar from './Components/Navbar'
+import OurPolicy from './Components/OurPolicy'
+import Footer from './Components/Footer'
 
 const App = () => {
   return (
@@ -28,6 +30,8 @@ const App = () => {
           
       </Routes>
       
+      <OurPolicy/>
+      <Footer/>
     </div>
   )
 }

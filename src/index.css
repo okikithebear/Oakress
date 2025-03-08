@@ -60,3 +60,7 @@ body {
 .slide:hover {
   @apply flex-[5];
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
