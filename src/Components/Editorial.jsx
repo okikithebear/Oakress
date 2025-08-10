@@ -3,25 +3,24 @@ import { motion } from "framer-motion";
 import Masonry from "react-masonry-css";
 import Modal from "react-modal";
 
-import video1 from "../assets/videos/Video1.mp4";
-import video2 from "../assets/videos/Video2.mp4";
-
+// Accessibility: bind modal to app root
 Modal.setAppElement("#root");
 
+// Videos with URLs from public folder
 const videos = [
   {
     id: "video1",
-    src: video1,
+    src: "/videos/Video1.mp4",
     title: "Beautiful Nature Scene",
   },
   {
     id: "video2",
-    src: video2,
+    src: "/videos/Video2.mp4",
     title: "Cityscape Timelapse",
   },
   {
     id: "video3",
-    src: video2,
+    src: "/videos/Video2.mp4",
     title: "Cityscape Timelapse Duplicate",
   },
 ];
@@ -29,7 +28,7 @@ const videos = [
 export default function EditorialVideoMasonry() {
   const [openVideo, setOpenVideo] = useState(null);
 
-  // Close modal on Escape key
+  // Close modal on Escape key press
   useEffect(() => {
     const onKeyDown = (e) => {
       if (e.key === "Escape") setOpenVideo(null);
@@ -38,6 +37,7 @@ export default function EditorialVideoMasonry() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  // Masonry breakpoints
   const breakpointCols = {
     default: 3,
     1024: 2,
