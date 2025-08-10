@@ -20,7 +20,6 @@ const Navbar = () => {
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
   }, [isMobileMenuOpen]);
-  
 
   const navLinks = [
     { path: "/", label: "Home", icon: faHome },
@@ -29,112 +28,111 @@ const Navbar = () => {
     { path: "/contact", label: "Contact", icon: faEnvelope },
   ];
 
-  return (
-    <div className="flex items-center justify-between py-5 font-medium">
-      {/* Logo */}
-      <Link to="/">
-        <img src={assets.logo} alt="Logo" className="w-36" />
-      </Link>
-
-      {/* Navigation Links */}
-      <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
-        {navLinks.map(({ path, label }) => (
-          <NavLink
-            key={label}
-            to={path}
-            className={({ isActive }) =>
-              `flex flex-col items-center gap-1 ${
-                isActive ? "text-indigo-600" : ""
-              }`
-            }
-          >
-            <p>{label.toUpperCase()}</p>
-            <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
-          </NavLink>
-        ))}
-      </ul>
-
-      {/* Icons and Mobile Menu */}
-      <div className="flex items-center gap-6">
-        {/* Search Icon */}
-        <FontAwesomeIcon
-          icon={faSearch}
-          className="w-5 cursor-pointer"
-          aria-label="Search"
-        />
-
-        {/* Profile Icon */}
-        <div className="group relative">
-          <FontAwesomeIcon
-            icon={faUserCircle}
-            className="w-5 cursor-pointer"
-            aria-label="Profile"
-          />
-          <div
-            className="group-hover:block hidden absolute dropdown-menu right-0 pt-4"
-            role="menu"
-            aria-hidden={!isMobileMenuOpen}
-          >
-            <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
-              <p className="cursor-pointer hover:text-black">My Profile</p>
-              <p className="cursor-pointer hover:text-black">Orders</p>
-              <p className="cursor-pointer hover:text-black">Logout</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Cart Icon */}
-        <Link to="/cart" className="relative" aria-label="Cart">
-          <FontAwesomeIcon icon={faShoppingCart} className="w-5 min-w-5" />
-          <p className="absolute right-[-5px] bottom-[-5px] w-4 h-4 flex items-center justify-center bg-black text-white text-xs rounded-full">
-            10
-          </p>
-        </Link>
-
-        {/* Mobile Menu Icon */}
-        <FontAwesomeIcon
-          onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-          icon={faBars}
-          className="w-5 cursor-pointer sm:hidden"
-          aria-label="Open Menu"
-        />
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      <div
-  className={`absolute top-0 right-0 bottom-0 bg-white transition-transform duration-300 shadow-lg ${
-    isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-  } max-w-full w-3/4 sm:w-1/2`}
-  role="menu"
-  aria-hidden={!isMobileMenuOpen}
->
-  <button
-    onClick={() => setMobileMenuOpen(false)}
-    className="absolute top-4 right-4 text-gray-700 p-2 bg-gray-100 rounded-full shadow-md hover:bg-gray-200"
-    aria-label="Close Menu"
-  >
-    <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
-  </button>
-  <ul className="flex flex-col gap-6 p-8 text-base text-gray-800">
-    {navLinks.map(({ path, label, icon }) => (
+  const renderNavLinks = (isMobile = false) =>
+    navLinks.map(({ path, label, icon }) => (
       <NavLink
         key={label}
         to={path}
-        onClick={() => setMobileMenuOpen(false)}
+        onClick={() => isMobile && setMobileMenuOpen(false)}
         className={({ isActive }) =>
-          `flex items-center gap-3 font-medium hover:text-indigo-600 transition-all ${
-            isActive ? "text-indigo-600" : ""
+          `flex items-center gap-2 font-medium transition-all 
+          ${isMobile ? "text-lg py-2" : "text-sm"}
+          hover:text-indigo-600 ${
+            isActive ? "text-indigo-600" : "text-gray-700"
           }`
         }
       >
-        <FontAwesomeIcon icon={icon} className="w-5 h-5" />
+        {isMobile && <FontAwesomeIcon icon={icon} className="w-5 h-5" />}
         {label}
       </NavLink>
-    ))}
-  </ul>
-</div>
+    ));
 
-    </div>
+  return (
+    <nav className="relative flex items-center justify-between py-5 px-4 sm:px-8 font-medium bg-white shadow-sm">
+      {/* Logo */}
+      <Link to="/" className="flex items-center gap-2">
+        <img src={assets.logo} alt="Logo" className="w-36" />
+      </Link>
+
+      {/* Desktop Nav */}
+      <ul className="hidden sm:flex gap-6">{renderNavLinks()}</ul>
+
+      {/* Icons */}
+      <div className="flex items-center gap-6">
+        {/* Search */}
+        <button aria-label="Search">
+          <FontAwesomeIcon icon={faSearch} className="w-5 h-5 cursor-pointer" />
+        </button>
+
+        {/* Profile Dropdown */}
+        <div className="relative group">
+          <FontAwesomeIcon
+            icon={faUserCircle}
+            className="w-6 h-6 cursor-pointer"
+            aria-label="Profile Menu"
+          />
+          <div
+            className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg hidden group-hover:block"
+            role="menu"
+          >
+            <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+              My Profile
+            </button>
+            <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+              Orders
+            </button>
+            <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+              Logout
+            </button>
+          </div>
+        </div>
+
+        {/* Cart */}
+        <Link to="/cart" className="relative" aria-label="Cart">
+          <FontAwesomeIcon icon={faShoppingCart} className="w-6 h-6" />
+          <span className="absolute -right-2 -top-2 w-5 h-5 flex items-center justify-center bg-black text-white text-xs rounded-full">
+            10
+          </span>
+        </Link>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="sm:hidden"
+          aria-label="Open Mobile Menu"
+        >
+          <FontAwesomeIcon icon={faBars} className="w-6 h-6" />
+        </button>
+      </div>
+
+      {/* Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 sm:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Menu */}
+      <aside
+        className={`fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-lg transform transition-transform duration-300 sm:hidden z-50 ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        role="dialog"
+        aria-modal="true"
+      >
+        <div className="flex justify-between items-center p-4 border-b">
+          <img src={assets.logo} alt="Logo" className="w-28" />
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close Mobile Menu"
+          >
+            <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
+          </button>
+        </div>
+        <ul className="flex flex-col p-6 gap-4">{renderNavLinks(true)}</ul>
+      </aside>
+    </nav>
   );
 };
 

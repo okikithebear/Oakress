@@ -1,5 +1,3 @@
-
-
 const Footer = () => {
   return (
     <footer className="py-10 px-6 text-gray-700 w-full">
@@ -38,7 +36,7 @@ const Footer = () => {
           <ul className="space-y-2">
             <li>
               <a
-                href="#"
+                href="/terms"
                 className="hover:text-black transition duration-200"
               >
                 Terms of Service
@@ -46,7 +44,7 @@ const Footer = () => {
             </li>
             <li>
               <a
-                href="#"
+                href="/shipping-policy"
                 className="hover:text-black transition duration-200"
               >
                 Shipping Policy
@@ -54,7 +52,7 @@ const Footer = () => {
             </li>
             <li>
               <a
-                href="#"
+                href="/returns"
                 className="hover:text-black transition duration-200"
               >
                 Return and Refund Policy
@@ -62,7 +60,7 @@ const Footer = () => {
             </li>
             <li>
               <a
-                href="#"
+                href="/privacy"
                 className="hover:text-black transition duration-200"
               >
                 Privacy Policy
@@ -76,34 +74,22 @@ const Footer = () => {
           <h3 className="text-lg font-semibold mb-4">THE OAKRESS</h3>
           <ul className="space-y-2">
             <li>
-              <a
-                href="#"
-                className="hover:text-black transition duration-200"
-              >
+              <a href="#" className="hover:text-black transition duration-200">
                 The Legacy
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="hover:text-black transition duration-200"
-              >
+              <a href="#" className="hover:text-black transition duration-200">
                 The History
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="hover:text-black transition duration-200"
-              >
+              <a href="#" className="hover:text-black transition duration-200">
                 The Founder
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="hover:text-black transition duration-200"
-              >
+              <a href="#" className="hover:text-black transition duration-200">
                 The Impact
               </a>
             </li>
