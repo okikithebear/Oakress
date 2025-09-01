@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaShareAlt, FaTimes } from "react-icons/fa";
-import dressesVideo from "../assets/videos/Video1.mp4";
-import btsVideo from "../assets/videos/Video2.mp4";
-import runwayVideo from "../assets/videos/Video2.mp4";
+import dressesVideo from "../assets/vIDEOS/Video1.mp4";
+import btsVideo from "../assets/vIDEOS/Video2.mp4";
+import runwayVideo from "../assets/vIDEOS/Video2.mp4";
 
 const allVideos = [
   { id: 1, title: "Dresses Highlight", category: "Dresses", src: dressesVideo },
