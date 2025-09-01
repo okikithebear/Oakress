@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { sendSignInLinkToEmail } from "firebase/auth";
-import { auth } from "../Firebase"; // ✅ Firebase instance
+import { auth } from "../firebase"; // ✅ Firebase instance
 import { assets } from "../assets/assets";
 
 const SignIn = () => {
