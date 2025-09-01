@@ -1,9 +1,10 @@
-import BestSeller from "../Components/BestSeller";
+// import BestSeller from "../Components/BestSeller";
 import Hero from "../Components/Hero";
 import DesignDetails from "../Components/DesignDetails";
 // import LatestCollection from "../Components/LatestCollection";
 import Collections from "../Components/Collections";
 import Editorials from "../Components/Editorial";
+import Showcase from "../Components/Showcase";
 
 const Home = () => {
   return (
@@ -13,7 +14,8 @@ const Home = () => {
       <Collections />
       <Editorials />
       {/* <LatestCollection /> */}
-      <BestSeller />
+      {/* <BestSeller /> */}
+      <Showcase />
     </div>
   );
 };
