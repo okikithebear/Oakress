@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../Context/AuthContext";
 import { signOut } from "firebase/auth";
-import { auth } from "../Firebase";
+import { auth } from "../firebase";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
