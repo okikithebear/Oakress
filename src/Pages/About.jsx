@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
+import founder from "../assets/beauty1.jpg";
 const About = () => {
   const [activeTab, setActiveTab] = useState("founder");
 
@@ -31,10 +31,12 @@ const About = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="text-center max-w-2xl mx-auto"
+            className="text-center max-w-3xl mx-auto"
           >
-            <h2 className="text-3xl font-semibold mb-4">Our Legacy</h2>
-            <p className="text-gray-600 leading-relaxed">
+            <h2 className="text-4xl font-semibold mb-6 text-yellow-800">
+              Our Legacy
+            </h2>
+            <p className="text-gray-600 text-lg leading-relaxed">
               For decades, our designs have celebrated the timeless beauty and
               strength of women worldwide, weaving stories into every stitch.
             </p>
@@ -49,10 +51,12 @@ const About = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="text-center max-w-2xl mx-auto"
+            className="text-center max-w-3xl mx-auto"
           >
-            <h2 className="text-3xl font-semibold mb-4">Our History</h2>
-            <p className="text-gray-600 leading-relaxed">
+            <h2 className="text-4xl font-semibold mb-6 text-yellow-800">
+              Our History
+            </h2>
+            <p className="text-gray-600 text-lg leading-relaxed">
               Founded in 2010, we began as a small atelier with a dream to
               redefine modern elegance, one garment at a time.
             </p>
@@ -67,65 +71,41 @@ const About = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="grid md:grid-cols-2 gap-8 items-start max-w-6xl mx-auto"
+            className="grid md:grid-cols-2 gap-12 items-start max-w-6xl mx-auto"
           >
             <motion.img
-              src="/images/founder.jpg"
+              src={founder}
               alt="Jane Doe"
-              className="w-full h-auto object-cover rounded-2xl shadow-lg"
+              className="w-full h-auto object-cover rounded-2xl shadow-xl sticky top-24"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1, transition: { duration: 0.6 } }}
             />
-            <div className="space-y-6 text-gray-700">
-              <h2 className="text-3xl font-semibold text-yellow-800">
+            <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
+              <h2 className="text-4xl font-bold text-yellow-800 mb-4">
                 Jane Doe: Redefining Modern Elegance
               </h2>
               <p>
                 <strong>Jane Doe</strong>, the visionary behind{" "}
-                <strong>[Your Brand Name]</strong>, founded the label with one
-                clear mission: to craft timeless pieces that celebrate
-                femininity, individuality, and the artistry of couture. Her
-                journey from a high-powered corporate career to the heart of the
-                fashion world is a testament to her courage, creativity, and
-                relentless pursuit of excellence.
+                <strong>Oakress</strong>, founded the label with one clear
+                mission: to craft timeless pieces that celebrate femininity,
+                individuality, and the artistry of couture.
               </p>
-              <h3 className="text-xl font-semibold text-yellow-800 uppercase">
+              <h3 className="text-xl font-semibold text-yellow-700 uppercase">
                 From Boardroom to Atelier
               </h3>
               <p>
-                Raised in a world where elegance was a way of life, Janes
-                passion for design began early, inspired by the women who shaped
-                her sense of style and strength. She honed her business acumen
-                in global finance before turning her focus to fashion, bringing
-                an unshakable foundation in strategy and innovation — qualities
-                that now define her brand’s DNA.
+                Raised in a world where elegance was a way of life, Jane’s
+                passion for design began early. She honed her business acumen
+                before turning her focus to fashion, blending strategy and
+                artistry.
               </p>
-              <h3 className="text-xl font-semibold text-yellow-800 uppercase">
-                A Signature Aesthetic
-              </h3>
-              <p>
-                Every piece Jane creates is a love letter to the modern woman —
-                meticulously cut, thoughtfully detailed, and imbued with quiet
-                confidence. Her designs balance sculptural silhouettes with
-                fluid draping, marrying contemporary minimalism with subtle nods
-                to heritage craftsmanship.
-              </p>
-              <h3 className="text-xl font-semibold text-yellow-800 uppercase">
-                Empowerment Through Design
-              </h3>
-              <p>
-                Jane believes true luxury lies not only in the fabric, but in
-                the feeling it evokes. Her work is about more than garments —
-                it’s about empowering women to own their presence, tell their
-                stories, and step into any room with quiet authority.
-              </p>
-              <h3 className="text-xl font-semibold text-yellow-800 uppercase">
+              <h3 className="text-xl font-semibold text-yellow-700 uppercase">
                 A Vision for the Future
               </h3>
               <p>
-                Looking ahead, Jane remains committed to blending tradition with
-                innovation — championing sustainable practices, supporting local
-                artisans, and creating pieces that stand the test of time.
+                Jane remains committed to blending tradition with innovation —
+                championing sustainability and creating pieces that stand the
+                test of time.
               </p>
             </div>
           </motion.div>
@@ -139,10 +119,12 @@ const About = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="text-center max-w-2xl mx-auto"
+            className="text-center max-w-3xl mx-auto"
           >
-            <h2 className="text-3xl font-semibold mb-4">Our Impact</h2>
-            <p className="text-gray-600 leading-relaxed">
+            <h2 className="text-4xl font-semibold mb-6 text-yellow-800">
+              Our Impact
+            </h2>
+            <p className="text-gray-600 text-lg leading-relaxed">
               From sustainable sourcing to empowering artisans, we believe
               fashion can be a force for good — creating beauty that lasts.
             </p>
@@ -155,25 +137,31 @@ const About = () => {
   };
 
   return (
-    <div className="w-full px-4 py-12 bg-white">
+    <section className="w-full px-6 md:px-12 py-16 bg-gradient-to-b from-white to-yellow-50 relative">
+      {/* Section Heading */}
+      <h1 className="text-center text-5xl font-bold mb-12 text-gray-900">
+        About Us
+      </h1>
+
       {/* Tabs */}
-      <div className="flex justify-center gap-6 border-b border-gray-300 mb-10 relative">
+      <div className="flex overflow-x-auto gap-6 border-b border-gray-300 mb-12 justify-center scrollbar-hide">
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={`pb-2 relative text-lg tracking-wide transition-all duration-300 ${
+            className={`pb-2 relative text-lg md:text-xl font-medium tracking-wide transition-all duration-300 ${
               activeTab === tab.id
                 ? "text-yellow-700 font-semibold"
                 : "text-gray-700 hover:text-yellow-700"
             }`}
+            aria-selected={activeTab === tab.id}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}
             {activeTab === tab.id && (
               <motion.div
                 layoutId="underline"
-                className="absolute left-0 right-0 -bottom-[1px] h-[2px] bg-yellow-700"
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="absolute left-0 right-0 -bottom-[2px] h-[3px] bg-yellow-700 rounded-full"
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
               />
             )}
           </button>
@@ -184,7 +172,7 @@ const About = () => {
       <div className="flex justify-center">
         <AnimatePresence mode="wait">{renderContent()}</AnimatePresence>
       </div>
-    </div>
+    </section>
   );
 };
 

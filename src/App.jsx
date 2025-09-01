@@ -19,6 +19,10 @@ import ShippingPolicy from "./Pages/ShippingPolicy";
 import ReturnRefundPolicy from "./Pages/ReturnTerms";
 import TermsOfService from "./Pages/TermsService";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
+import SignIn from "./Pages/SignIn";
+import Verify from "./Pages/Verify";
+import Profile from "./Pages/ProfileUser";
+import Gallery from "./Pages/Gallery";
 import ScrollToTop from "./Components/ScrollToTop"; // ⬅ import this
 
 const App = () => {
@@ -44,6 +48,10 @@ const App = () => {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/edit" element={<Editorials />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/verify" element={<Verify />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/gallery" element={<Gallery />} />
       </Routes>
       <OurPolicy />
       <Footer />
