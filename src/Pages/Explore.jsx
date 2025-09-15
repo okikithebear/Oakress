@@ -1,5 +1,5 @@
+"use client";
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
 import editorial1 from "../assets/beauty.jpg";
 import editorial2 from "../assets/beauty.jpg";
 import editorial3 from "../assets/beauty.jpg";
@@ -16,49 +16,48 @@ const editorials = [
   { title: "Cultural Essence", image: editorial6 },
 ];
 
+// Framer Motion Variants
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 },
+  },
+};
+
+const card = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 60, damping: 15 },
+  },
+};
+
 export default function ExploreNewTrends() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const cards = section.querySelectorAll(".trend-card");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in-up");
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    cards.forEach((card) => observer.observe(card));
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      className="w-full bg-white px-4 sm:px-6 py-12 sm:py-16"
-    >
+    <section className="w-full bg-white px-4 sm:px-6 py-12 sm:py-20">
       {/* Heading */}
       <motion.h1
         className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 tracking-wide text-neutral-800"
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
         Explore New Trends
       </motion.h1>
 
       {/* Grid */}
-      <div
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
         className="
           grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
           auto-rows-[260px] sm:auto-rows-[360px] lg:auto-rows-[480px]
-          gap-5 max-w-screen-xl mx-auto
+          gap-6 max-w-screen-xl mx-auto
         "
       >
         {editorials.map((item, i) => {
@@ -68,38 +67,36 @@ export default function ExploreNewTrends() {
           ].join(" ");
 
           return (
-            <div
+            <motion.div
               key={item.title}
-              className={`trend-card relative overflow-hidden rounded-2xl shadow-lg group opacity-0 transform translate-y-6 transition-all duration-700 ease-out ${gridClass}`}
+              variants={card}
+              whileHover={{ scale: 1.03, rotateX: 3, rotateY: -3 }}
+              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+              className={`relative overflow-hidden rounded-2xl shadow-lg group cursor-pointer ${gridClass}`}
             >
               {/* Image */}
-              <img
+              <motion.img
                 src={item.image}
                 alt={item.title}
                 loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-start p-6">
-                <p className="text-white text-xl sm:text-2xl font-semibold">
+              {/* Overlay */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileHover={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end justify-start p-6"
+              >
+                <p className="text-white text-xl sm:text-2xl font-semibold tracking-wide">
                   {item.title}
                 </p>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           );
         })}
-      </div>
-
-      {/* Animation keyframes */}
-      <style>
-        {`
-          .animate-fade-in-up {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-          }
-        `}
-      </style>
+      </motion.div>
     </section>
   );
 }

@@ -38,7 +38,7 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✅ Lock scroll & close on ESC for mobile menu
+  // ✅ Handle ESC key & scroll lock for overlays
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
 
@@ -87,16 +87,44 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await signOut(auth);
-    navigate("/signin");
+    navigate("/sign-in");
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
+    if (!searchQuery.trim()) return;
+
+    const query = searchQuery.toLowerCase();
+
+    // Define keyword-to-route mappings
+    const routesMap = {
+      home: "/",
+      about: "/about",
+      collection: "/collections",
+      collections: "/collections",
+      shop: "/collections",
+      contact: "/contact",
+      profile: "/profile",
+      cart: "/cart",
+      orders: "/orders",
+      signin: "/sign-in",
+      login: "/sign-in",
+    };
+
+    // Check if query matches a key in the routesMap
+    const matchedRoute = Object.keys(routesMap).find((key) =>
+      query.includes(key)
+    );
+
+    if (matchedRoute) {
+      navigate(routesMap[matchedRoute]);
+    } else {
+      // Fallback → search page
       navigate(`/search?q=${searchQuery}`);
-      setSearchOpen(false);
-      setSearchQuery("");
     }
+
+    setSearchQuery("");
+    setSearchOpen(false);
   };
 
   return (
@@ -111,13 +139,35 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <ul className="hidden sm:flex gap-8">{renderNavLinks()}</ul>
 
-          {/* Right Icons */}
+          {/* Right Section */}
           <div className="flex items-center gap-6">
-            {/* Search */}
+            {/* Search (inline for desktop, overlay toggle for mobile) */}
+            <div className="hidden sm:block relative">
+              <form
+                onSubmit={handleSearchSubmit}
+                className="flex items-center border rounded-lg overflow-hidden"
+              >
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search..."
+                  className="px-3 py-1 text-sm w-40 focus:w-56 transition-all duration-300 outline-none"
+                />
+                <button
+                  type="submit"
+                  className="bg-indigo-600 text-white px-3 py-1 hover:bg-indigo-700"
+                >
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
+              </form>
+            </div>
+
+            {/* Mobile Search Toggle */}
             <button
               aria-label="Search"
               onClick={() => setSearchOpen((prev) => !prev)}
-              className="hover:text-indigo-600 transition"
+              className="sm:hidden hover:text-indigo-600 transition"
             >
               <FontAwesomeIcon icon={faSearch} className="w-5 h-5" />
             </button>
@@ -175,8 +225,8 @@ const Navbar = () => {
               aria-label="Cart"
             >
               <FontAwesomeIcon icon={faShoppingCart} className="w-6 h-6" />
-              <span className="absolute -right-2 -top-2 w-5 h-5 flex items-center justify-center bg-black text-white text-xs rounded-full">
-                10
+              <span className="absolute -right-2 -top-2 w-5 h-5 flex items-center justify-center bg-indigo-600 text-white text-xs font-semibold rounded-full">
+                3
               </span>
             </Link>
 
@@ -190,14 +240,6 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-
-        {/* Mobile Overlay */}
-        {isMobileMenuOpen && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 sm:hidden"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-        )}
 
         {/* Mobile Menu */}
         <aside
@@ -220,9 +262,9 @@ const Navbar = () => {
         </aside>
       </nav>
 
-      {/* Search Overlay */}
+      {/* Mobile Search Overlay */}
       {isSearchOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center sm:hidden">
           <div className="bg-white rounded-lg p-4 w-11/12 max-w-md shadow-lg">
             <form onSubmit={handleSearchSubmit} className="flex">
               <input
