@@ -4,7 +4,6 @@ import CollectionsPage from "./Pages/CollectionsPage";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import Product from "./Pages/Product";
-import Cart from "./Pages/Cart";
 import Login from "./Pages/Login";
 import PlaceOrder from "./Pages/PlaceOrder";
 import Orders from "./Pages/Orders";
@@ -12,7 +11,10 @@ import Navbar from "./Components/Navbar";
 import OurPolicy from "./Components/OurPolicy";
 import Editorials from "./Components/Editorial";
 import Footer from "./Components/Footer";
+import ReadyToOrder from "./Components/ReadyToOrder";
 import OakdressMuse from "./Pages/Oakress";
+import Cart from "./Pages/Cart";
+import Bespoke from "./Pages/Bespoke";
 import TheWayOfBeauty from "./Pages/Beauty";
 import ExploreNewTrends from "./Pages/Explore";
 import ShippingPolicy from "./Pages/ShippingPolicy";
@@ -52,6 +54,9 @@ const App = () => {
         <Route path="/verify" element={<Verify />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/bespoke" element={<Bespoke />} />
+        <Route path="/readyorder" element={<ReadyToOrder />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       <OurPolicy />
       <Footer />

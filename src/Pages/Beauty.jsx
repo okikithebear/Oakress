@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import beauty1 from "../assets/beauty.jpg";
 import beauty2 from "../assets/beauty1.jpg";
@@ -27,26 +28,49 @@ const pillars = [
   },
 ];
 
+// Animation Variants
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 },
+  },
+};
+
+const card = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 60, damping: 18 },
+  },
+};
+
 export default function TheWayOfBeauty() {
   return (
-    <section className="w-full bg-white px-4 sm:px-6 py-12 sm:py-16">
+    <section className="w-full bg-white px-4 sm:px-6 py-12 sm:py-20">
       {/* Heading */}
       <motion.h1
-        className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 sm:mb-16 tracking-wide"
+        className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 sm:mb-16 tracking-wide text-neutral-800"
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
         The Way of Beauty
       </motion.h1>
 
-      {/* Grid Layout */}
-      <div
+      {/* Grid */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
         className="
           max-w-screen-xl mx-auto 
           grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 
           gap-6 
-          auto-rows-[280px] sm:auto-rows-[350px] lg:auto-rows-[500px]
+          auto-rows-[280px] sm:auto-rows-[360px] lg:auto-rows-[500px]
         "
       >
         {pillars.map((pillar, i) => {
@@ -60,41 +84,39 @@ export default function TheWayOfBeauty() {
           return (
             <motion.div
               key={pillar.title}
-              className={`relative overflow-hidden rounded-2xl group shadow-md hover:shadow-xl ${gridClass}`}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
+              variants={card}
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 200, damping: 18 }}
+              className={`relative overflow-hidden rounded-2xl shadow-lg group cursor-pointer ${gridClass}`}
             >
-              {/* Image with blur-up effect */}
-              <div className="relative w-full h-full overflow-hidden">
-                <img
-                  src={pillar.image}
-                  alt={pillar.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                {/* Blur overlay for loading effect */}
-                <div className="absolute inset-0 bg-gray-200 animate-pulse opacity-0 group-[img]:hidden"></div>
-              </div>
+              {/* Background Image */}
+              <img
+                src={pillar.image}
+                alt={pillar.title}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
 
               {/* Overlay */}
-              <motion.div
-                className="absolute inset-0 bg-black/50 flex flex-col justify-end p-6 translate-y-full group-hover:translate-y-0 transition-all duration-700"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.2 }}
-              >
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-2">
-                  {pillar.title}
-                </h3>
-                <p className="text-sm sm:text-base text-white/90 leading-relaxed">
-                  {pillar.desc}
-                </p>
-              </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex items-end">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileHover={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="p-6"
+                >
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-2">
+                    {pillar.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-white/90 leading-relaxed">
+                    {pillar.desc}
+                  </p>
+                </motion.div>
+              </div>
             </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </section>
   );
 }

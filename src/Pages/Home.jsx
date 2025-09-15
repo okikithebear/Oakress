@@ -5,6 +5,7 @@ import DesignDetails from "../Components/DesignDetails";
 import Collections from "../Components/Collections";
 import Editorials from "../Components/Editorial";
 import Showcase from "../Components/Showcase";
+import ReadyOrder from "../Components/ReadyToOrder";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <DesignDetails />
       <Collections />
       <Editorials />
+      <ReadyOrder />
       {/* <LatestCollection /> */}
       {/* <BestSeller /> */}
       <Showcase />
