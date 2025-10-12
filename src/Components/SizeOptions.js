@@ -1,0 +1,30 @@
+export const ukSizeOptions = [
+  "UK 4",
+  "UK 6",
+  "UK 8",
+  "UK 10",
+  "UK 12",
+  "UK 14",
+  "UK 16",
+  "UK 18",
+  "UK 20",
+  "Custom Size",
+];
+
+export const heightOptions = [
+  "4'11",
+  "5'0",
+  "5'1",
+  "5'2",
+  "5'3",
+  "5'4",
+  "5'5",
+  "5'6",
+  "5'7",
+  "5'8",
+  "5'9",
+  "5'10",
+  "5'11",
+  "6'0",
+  "Custom Height",
+];

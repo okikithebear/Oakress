@@ -1,18 +1,17 @@
+// src/main.jsx or src/index.jsx
 import { BrowserRouter } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
-import ShopContextProvider from "./Context/ShopContext.jsx";
-import { AuthProvider } from "./Context/AuthContext.jsx"; // ✅ Import AuthProvider
+import { AuthProvider } from "./Context/AuthContext.jsx"; // ✅ Auth Context
+import { CartProvider } from "./Context/CartContext.jsx"; // ✅ Cart + Products Context
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthProvider>
-      {" "}
-      {/* ✅ Wrap inside AuthProvider */}
-      <ShopContextProvider>
+      <CartProvider>
         <App />
-      </ShopContextProvider>
+      </CartProvider>
     </AuthProvider>
   </BrowserRouter>
 );

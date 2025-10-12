@@ -1,7 +1,7 @@
 import { useContext, useState, useMemo } from "react";
 import Title from "../Components/Title";
 import ProductItem from "../Components/Productitem";
-import { ShopContext } from "../Context/ShopContext";
+import { CartContext } from "../Context/CartContext"; // ✅ use CartContext
 import { assets } from "../assets/assets";
 
 const SORT_OPTIONS = [
@@ -11,7 +11,7 @@ const SORT_OPTIONS = [
 ];
 
 const CollectionsPage = () => {
-  const { products } = useContext(ShopContext);
+  const { products } = useContext(CartContext); // ✅ fixed
 
   const [showFilter, setShowFilter] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);

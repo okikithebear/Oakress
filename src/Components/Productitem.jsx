@@ -1,10 +1,10 @@
-import  { useContext } from "react";
+import { useContext } from "react";
 import PropTypes from "prop-types"; // Import PropTypes
-import { ShopContext } from "../Context/ShopContext";
 import { Link } from "react-router-dom";
+import { CartContext } from "../Context/CartContext";
 
 const ProductItem = ({ id, image, name, price }) => {
-  const { currency } = useContext(ShopContext);
+  const { currency } = useContext(CartContext);
 
   return (
     <Link
@@ -31,7 +31,7 @@ const ProductItem = ({ id, image, name, price }) => {
         </h3>
 
         {/* Product Price */}
-        <p className="mt-2 text-lg font-bold text-gray-900">
+        <p className="mt-2 text-lg font-bold text-red-400">
           {currency}
           {price}
         </p>

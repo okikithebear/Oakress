@@ -14,6 +14,7 @@ import Footer from "./Components/Footer";
 import ReadyToOrder from "./Components/ReadyToOrder";
 import OakdressMuse from "./Pages/Oakress";
 import Cart from "./Pages/Cart";
+import Checkout from "./Pages/Checkout";
 import Bespoke from "./Pages/Bespoke";
 import TheWayOfBeauty from "./Pages/Beauty";
 import ExploreNewTrends from "./Pages/Explore";
@@ -57,6 +58,7 @@ const App = () => {
         <Route path="/bespoke" element={<Bespoke />} />
         <Route path="/readyorder" element={<ReadyToOrder />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
       <OurPolicy />
       <Footer />

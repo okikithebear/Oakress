@@ -1,4 +1,3 @@
-
 import { createContext } from "react";
 import { products } from "../assets/assets";
 
@@ -14,11 +13,7 @@ const ShopContextProvider = ({ children }) => {
     delivery_fee,
   };
 
-  return (
-    <ShopContext.Provider value={value}>
-      {children}
-    </ShopContext.Provider>
-  );
+  return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };
 
 export default ShopContextProvider; // Ensure this is a default export
