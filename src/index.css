@@ -4,6 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -------------------------------
+   General Layout & Reset
+--------------------------------*/
 a.active hr {
   display: block;
 }
@@ -11,23 +14,29 @@ a.active hr {
 html,
 body {
   overflow-x: hidden; /* Disable horizontal scrolling */
-  margin: 0; /* Remove default margins */
-  padding: 0; /* Ensure no padding on the edges */
-  width: 100%; /* Ensure the elements span the full viewport width */
-  height: 100%; /* Keep height consistent */
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
 * {
-  font-family: Outfit;
+  font-family: "Outfit", sans-serif;
   box-sizing: border-box;
 }
 
+/* -------------------------------
+   Typography
+--------------------------------*/
 .prata-regular {
   font-family: "Prata", serif;
   font-weight: 400;
   font-style: normal;
 }
 
+/* -------------------------------
+   Animation for marquee/scrolling sections
+--------------------------------*/
 @keyframes scrollAnimation {
   0% {
     transform: translateX(0);
@@ -53,6 +62,22 @@ body {
   }
 }
 
+/* -------------------------------
+   Showcase image shape and hover
+--------------------------------*/
+.mask-diagonal {
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0% 100%);
+  transition: clip-path 0.5s ease-in-out, transform 0.6s ease;
+}
+
+.mask-diagonal:hover {
+  clip-path: polygon(0 0, 100% 0, 100% 82%, 0% 95%);
+  transform: scale(1.02);
+}
+
+/* -------------------------------
+   Slide (for carousel or gallery)
+--------------------------------*/
 .slide {
   @apply relative flex-auto bg-cover bg-center transition-all duration-500 ease-in-out;
 }
@@ -61,6 +86,9 @@ body {
   @apply flex-[5];
 }
 
+/* -------------------------------
+   Scrollbar styling (hidden for clean look)
+--------------------------------*/
 ::-webkit-scrollbar {
   display: none;
 }

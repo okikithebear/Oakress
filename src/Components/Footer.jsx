@@ -1,125 +1,120 @@
+"use client";
+import { motion } from "framer-motion";
+
 const Footer = () => {
+  const fadeUp = (delay = 0) => ({
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { delay, duration: 0.6, ease: "easeOut" },
+    viewport: { once: true },
+  });
+
   return (
-    <footer className="py-10 px-6 text-gray-700 w-full">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {/* Connect With Us Section */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4">CONNECT WITH US</h3>
-          <div className="flex space-x-4">
-            <a
-              href="#"
-              aria-label="Twitter"
-              className="text-gray-500 hover:text-black transition duration-200"
-            >
-              <i className="fab fa-twitter text-2xl"></i>
-            </a>
-            <a
-              href="#"
-              aria-label="Facebook"
-              className="text-gray-500 hover:text-black transition duration-200"
-            >
-              <i className="fab fa-facebook text-2xl"></i>
-            </a>
-            <a
-              href="#"
-              aria-label="Instagram"
-              className="text-gray-500 hover:text-black transition duration-200"
-            >
-              <i className="fab fa-instagram text-2xl"></i>
-            </a>
+    <footer className="relative py-20 px-6 sm:px-12 bg-white text-gray-700 border-t border-gray-200 overflow-hidden">
+      {/* Elegant Background Glow */}
+      <div className="absolute inset-0 opacity-15 pointer-events-none">
+        <div className="absolute top-8 left-0 w-80 h-80 bg-gradient-to-br from-gray-200 to-white rounded-full blur-3xl"></div>
+        <div className="absolute bottom-8 right-0 w-80 h-80 bg-gradient-to-tl from-gray-100 to-white rounded-full blur-3xl"></div>
+      </div>
+
+      {/* Footer Content */}
+      <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-14 z-10">
+        {/* Connect Column */}
+        <motion.div {...fadeUp(0)}>
+          <h3 className="text-lg font-semibold tracking-wide mb-6 text-gray-900">
+            CONNECT WITH US
+          </h3>
+          <div className="flex space-x-6">
+  {[
+    {
+      name: "instagram",
+      color: "hover:text-black",
+      link: "https://www.instagram.com/oakress_?igsh=cHpwMGhwZGlzMms0",
+    },
+  ].map(({ name, color, link }) => (
+    <motion.a
+      key={name}
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={name}
+      whileHover={{ y: -3, scale: 1.1 }}
+      className={`text-gray-500 transition-all duration-300 ${color}`}
+    >
+      <i className={`fab fa-${name} text-2xl`}></i>
+    </motion.a>
+            ))}
           </div>
-        </div>
+        </motion.div>
 
-        {/* Legal Terms Section */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4">TERMS AND CONDITIONS</h3>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="/terms"
-                className="hover:text-black transition duration-200"
-              >
-                Terms of Service
-              </a>
-            </li>
-            <li>
-              <a
-                href="/shipping-policy"
-                className="hover:text-black transition duration-200"
-              >
-                Shipping Policy
-              </a>
-            </li>
-            <li>
-              <a
-                href="/returns"
-                className="hover:text-black transition duration-200"
-              >
-                Return and Refund Policy
-              </a>
-            </li>
-            <li>
-              <a
-                href="/privacy"
-                className="hover:text-black transition duration-200"
-              >
-                Privacy Policy
-              </a>
-            </li>
+        {/* Legal Column */}
+        <motion.div {...fadeUp(0.1)}>
+          <h3 className="text-lg font-semibold tracking-wide mb-6 text-gray-900">
+            TERMS & POLICIES
+          </h3>
+          <ul className="space-y-3 text-sm">
+            {[
+              ["Terms of Service", "/terms"],
+              ["Shipping Policy", "/shipping-policy"],
+              ["Return & Refund Policy", "/returns"],
+              ["Privacy Policy", "/privacy"],
+            ].map(([label, link]) => (
+              <li key={label}>
+                <a
+                  href={link}
+                  className="hover:text-black transition-all duration-300 hover:pl-1"
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
           </ul>
-        </div>
+        </motion.div>
 
-        {/* The Oakress Legacy Section */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4">THE OAKRESS</h3>
-          <ul className="space-y-2">
+        {/* Explore Column */}
+        <motion.div {...fadeUp(0.2)}>
+          <h3 className="text-lg font-semibold tracking-wide mb-6 text-gray-900">
+            THE OAKRESS
+          </h3>
+          <ul className="space-y-3 text-sm">
             <li>
-              <a href="#" className="hover:text-black transition duration-200">
+              <a href="/about" className="hover:text-black hover:pl-1 transition-all duration-300">
                 The Legacy
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-black transition duration-200">
-                The History
+              <a href="/skirt-guide" className="hover:text-black hover:pl-1 transition-all duration-300">
+                Skirt Size
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-black transition duration-200">
-                The Founder
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-black transition duration-200">
-                The Impact
+              <a href="/size-guide" className="hover:text-black hover:pl-1 transition-all duration-300">
+                Size Guide
               </a>
             </li>
           </ul>
-          <select
-            className="mt-4 w-full border-gray-300 rounded p-2 focus:outline-none focus:ring focus:ring-black"
-            aria-label="Select Country"
-          >
-            <option value="USD">United States (USD $)</option>
-            <option value="EUR">Europe (EUR €)</option>
-            <option value="GBP">United Kingdom (GBP £)</option>
-          </select>
-        </div>
+        </motion.div>
 
-        {/* Collections Section */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4">COLLECTIONS</h3>
-          <ul className="space-y-2">
-            <li>2016 – Noir Éclat by the OAKRESS</li>
-            <li>2017 – The woman 2018</li>
-            <li>2020 – Bridal – Beyond by the OAKRESS</li>
-            <li>2020 – RTW – Awelewa by the OAKRESS</li>
+        {/* Collections Column */}
+        <motion.div {...fadeUp(0.3)}>
+          <h3 className="text-lg font-semibold tracking-wide mb-6 text-gray-900">
+            COLLECTIONS
+          </h3>
+          <ul className="space-y-3 text-sm">
+            <li className="text-gray-600 hover:text-black transition duration-300">
+              2025 – Her Garden of Graxe
+            </li>
           </ul>
-        </div>
+        </motion.div>
       </div>
 
       {/* Footer Bottom */}
-      <div className="text-center text-sm text-gray-500 mt-10">
-        © 2025 OAKRESS. All rights reserved.
-      </div>
+      <motion.div
+        {...fadeUp(0.4)}
+        className="text-center text-xs sm:text-sm text-gray-500 mt-16 tracking-wide"
+      >
+        © {new Date().getFullYear()} OAKRESS. Crafted with Grace & Elegance.
+      </motion.div>
     </footer>
   );
 };

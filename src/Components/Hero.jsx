@@ -1,28 +1,44 @@
-
-import { assets } from '../assets/assets'
+import HeroImage from '../assets/Actual product/Hero 2.JPG';
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <div className='flex flex-col sm:flex-row border border-gray-400'>
+    <div className="flex flex-col sm:flex-row bg-[#fafafa]">
+      
+      {/* Left Section */}
+      <div className="w-full sm:w-1/2 flex items-center justify-center py-20 px-8 sm:px-16">
+        <div className="text-[#1a1a1a] space-y-5">
+          
+          <p className="text-xs tracking-[0.25em] text-gray-500 uppercase">
+            New Collection
+          </p>
 
-        {/* hero left side */}
+          <h1 className="font-light text-4xl sm:text-5xl leading-tight uppercase tracking-wide">
+            Elegance in <br />Every Detail
+          </h1>
 
-        <div className="w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0">
-         <div className="text-[#414141]">
-        <div className="flex items-center gap-2">
-            <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p>
-             <p className="font medium text-sm md:txt-base"> OUR BESTSELLERS</p>
+          <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-md">
+            Step into timeless style with Oakress — where modern sophistication meets luxury craftsmanship.
+          </p>
+
+<button className="mt-6 px-8 py-3 text-sm tracking-wider border border-black hover:bg-black hover:text-white transition-all duration-300 ease-in-out uppercase">
+  <Link to="/collections" className="w-full h-full block">
+    Shop Collection
+  </Link>
+</button>
         </div>
-        <h1 className='prata-regular text-3xl sm:py-3 lg:text-5xl leadng-relaxed'>Latest Arrivals</h1>
-        <div className="flex items-center gap-2">
-            <p className="font-semibold text-sm md:text-base">SHOP NOW</p>
-            <p className='w-8 md:w-11 h-[1px] bg-[#414141]'></p>
-        </div>
-        </div>
-        </div>
-        <img className='w-full sm:w-1/2' src={assets.hero_img} alt='hero'/>
+      </div>
+
+      {/* Right Image Section */}
+      <div className="w-full sm:w-1/2 h-[450px] sm:h-[650px] overflow-hidden relative">
+        <img
+          src={HeroImage}
+          alt="Oakress Fashion Model"
+          className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-[1.2s]"
+        />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

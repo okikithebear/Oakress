@@ -228,7 +228,7 @@ const BespokeOrder = () => {
       <div className="max-w-4xl mx-auto text-center mt-16">
         <p className="text-gray-600 mb-4">Prefer a one-on-one consultation?</p>
         <motion.a
-          href="https://wa.me/234XXXXXXXXXX" // replace with your WhatsApp link
+          href="https://wa.me/447575839134?text=Hi!%20I%E2%80%99d%20like%20to%20book%20a%20bespoke%20consultation."
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}

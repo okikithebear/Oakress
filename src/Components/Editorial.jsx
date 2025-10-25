@@ -1,23 +1,23 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import editorialVideo from "../assets/vIDEOS/Video1.mp4";
+import { Volume2, VolumeX } from "lucide-react";
+import editorialVideo from "../assets/videos/2.mov";
 
 const Editorial = () => {
   const videoRef = useRef(null);
   const [muted, setMuted] = useState(true);
 
   const toggleMute = () => {
-    setMuted((m) => !m);
-    if (videoRef.current) videoRef.current.muted = !videoRef.current.muted;
+    setMuted((prev) => !prev);
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+    }
   };
 
   return (
-    <section
-      aria-labelledby="editorial-heading"
-      className="relative isolate overflow-hidden mt-20 mb-20"
-    >
+    <section className="relative isolate overflow-hidden mt-20 mb-20">
       {/* Video */}
-      <div className="relative h-[60vh] sm:h-[70vh]">
+      <div className="relative h-[85vh] w-full">
         <video
           ref={videoRef}
           src={editorialVideo}
@@ -25,44 +25,51 @@ const Editorial = () => {
           loop
           muted={muted}
           playsInline
-          preload="metadata"
-          className="absolute inset-0 h-full w-full object-cover"
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Soft gradient for readability */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
       </div>
 
-      {/* Content Overlay */}
+      {/* Overlay Content */}
       <div className="absolute inset-0 flex items-end">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 pb-10 sm:pb-14">
-          <div className="max-w-2xl text-white">
-            <h2
-              id="editorial-heading"
-              className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight"
-            >
-              Inside the Atelier
-            </h2>
-            <p className="mt-3 text-sm sm:text-base text-neutral-200/90">
-              Go behind the seams—pattern cutting, hand-finishing, and every
-              detail that brings each piece to life.
+        <div className="mx-auto w-full max-w-6xl px-6 pb-14">
+          <div className="max-w-2xl text-white space-y-4">
+            <p className="tracking-[0.25em] uppercase text-sm text-gray-300">
+              Oakress Editorial
             </p>
 
-            <div className="mt-6 flex items-center gap-3">
+            <h2 className="text-4xl sm:text-5xl font-light uppercase leading-tight">
+              Movement. Texture. Identity.
+            </h2>
+
+            <p className="text-gray-200">
+              Every Oakress piece is crafted with intention—clean lines, bold
+              energy, and a timeless aesthetic built for today’s culture.
+            </p>
+
+            {/* Buttons */}
+            <div className="flex items-center gap-4 pt-4 flex-wrap">
+              <Link
+                to="/collections"
+                className="px-6 py-3 bg-white text-black text-sm font-medium tracking-wide uppercase hover:bg-gray-200 transition"
+              >
+                Explore Collection
+              </Link>
+
               <Link
                 to="/gallery"
-                className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-neutral-900 shadow-sm hover:bg-neutral-200 transition"
-                aria-label="Explore the gallery"
+                className="px-6 py-3 border border-white text-white text-sm font-medium tracking-wide uppercase hover:bg-white hover:text-black transition"
               >
-                Explore the Gallery
+                View Gallery
               </Link>
 
               <button
                 onClick={toggleMute}
-                className="inline-flex items-center justify-center rounded-xl bg-neutral-800/70 px-4 py-3 text-sm font-medium text-white backdrop-blur hover:bg-neutral-700 transition"
-                aria-pressed={!muted}
+                className="p-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm transition rounded-full"
                 aria-label={muted ? "Unmute video" : "Mute video"}
               >
-                {muted ? "Unmute" : "Mute"}
+                {muted ? <VolumeX size={22} /> : <Volume2 size={22} />}
               </button>
             </div>
           </div>

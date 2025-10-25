@@ -4,11 +4,10 @@ import CollectionsPage from "./Pages/CollectionsPage";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import Product from "./Pages/Product";
-import Login from "./Pages/Login";
+
 import PlaceOrder from "./Pages/PlaceOrder";
 import Orders from "./Pages/Orders";
 import Navbar from "./Components/Navbar";
-import OurPolicy from "./Components/OurPolicy";
 import Editorials from "./Components/Editorial";
 import Footer from "./Components/Footer";
 import ReadyToOrder from "./Components/ReadyToOrder";
@@ -22,8 +21,11 @@ import ShippingPolicy from "./Pages/ShippingPolicy";
 import ReturnRefundPolicy from "./Pages/ReturnTerms";
 import TermsOfService from "./Pages/TermsService";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
+import ThankYou from "./Pages/ThankYou";
 import SignIn from "./Pages/SignIn";
 import Verify from "./Pages/Verify";
+import SkirtGuide from "./Pages/SkirtGuide";
+import SizeGuide from "./Pages/SizeGuide";
 import Profile from "./Pages/ProfileUser";
 import Gallery from "./Pages/Gallery";
 import ScrollToTop from "./Components/ScrollToTop"; // ⬅ import this
@@ -40,7 +42,7 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />} />
+     
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/muse" element={<OakdressMuse />} />
@@ -59,8 +61,11 @@ const App = () => {
         <Route path="/readyorder" element={<ReadyToOrder />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/skirt-guide" element={<SkirtGuide />} />
+        <Route path="/size-guide" element={<SizeGuide />} />
+        <Route path="/thank-you" element={<ThankYou />} />
       </Routes>
-      <OurPolicy />
+  
       <Footer />
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { assets } from "../assets/assets";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useCart } from "../Context/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -12,16 +13,20 @@ import {
   faInfoCircle,
   faBox,
   faEnvelope,
+  faPhotoFilm,
+  faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../Context/AuthContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { toast } from "react-toastify"; // ✅ Toast import
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isProfileOpen, setProfileOpen] = useState(false);
+  const { cartCount, products } = useCart(); // ✅ Fetch products here
 
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -58,6 +63,8 @@ const Navbar = () => {
       { path: "/", label: "Home", icon: faHome },
       { path: "/about", label: "About", icon: faInfoCircle },
       { path: "/collections", label: "Collection", icon: faBox },
+      { path: "/gallery", label: "Gallery", icon: faPhotoFilm },
+      { path: "/bespoke", label: "Bespoke", icon: faClipboardList },
       { path: "/contact", label: "Contact", icon: faEnvelope },
     ],
     []
@@ -90,13 +97,26 @@ const Navbar = () => {
     navigate("/sign-in");
   };
 
+  // ✅ Updated Search Logic
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
 
     const query = searchQuery.toLowerCase();
 
-    // Define keyword-to-route mappings
+    // ✅ First search products
+    const matchedProduct = products?.find((product) =>
+      product.name.toLowerCase().includes(query)
+    );
+
+    if (matchedProduct) {
+      navigate(`/product/${matchedProduct.id}`);
+      setSearchQuery("");
+      setSearchOpen(false);
+      return;
+    }
+
+    // ✅ Fallback route search
     const routesMap = {
       home: "/",
       about: "/about",
@@ -111,7 +131,6 @@ const Navbar = () => {
       login: "/sign-in",
     };
 
-    // Check if query matches a key in the routesMap
     const matchedRoute = Object.keys(routesMap).find((key) =>
       query.includes(key)
     );
@@ -119,8 +138,8 @@ const Navbar = () => {
     if (matchedRoute) {
       navigate(routesMap[matchedRoute]);
     } else {
-      // Fallback → search page
-      navigate(`/search?q=${searchQuery}`);
+      // ✅ Show toast if no match
+      toast.error("Product not found. Try a different search 🔍");
     }
 
     setSearchQuery("");
@@ -141,7 +160,7 @@ const Navbar = () => {
 
           {/* Right Section */}
           <div className="flex items-center gap-6">
-            {/* Search (inline for desktop, overlay toggle for mobile) */}
+            {/* Search Desktop */}
             <div className="hidden sm:block relative">
               <form
                 onSubmit={handleSearchSubmit}
@@ -163,7 +182,7 @@ const Navbar = () => {
               </form>
             </div>
 
-            {/* Mobile Search Toggle */}
+            {/* Mobile Search */}
             <button
               aria-label="Search"
               onClick={() => setSearchOpen((prev) => !prev)}
@@ -172,19 +191,15 @@ const Navbar = () => {
               <FontAwesomeIcon icon={faSearch} className="w-5 h-5" />
             </button>
 
-            {/* Profile Dropdown */}
+            {/* Profile */}
             <div className="relative" ref={profileRef}>
               <FontAwesomeIcon
                 icon={faUserCircle}
                 className="w-6 h-6 cursor-pointer hover:text-indigo-600"
-                aria-label="Profile Menu"
                 onClick={() => setProfileOpen((prev) => !prev)}
               />
               {isProfileOpen && (
-                <div
-                  className="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg"
-                  role="menu"
-                >
+                <div className="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg">
                   {!user ? (
                     <button
                       onClick={() => navigate("/sign-in")}
@@ -219,42 +234,34 @@ const Navbar = () => {
             </div>
 
             {/* Cart */}
-            <Link
-              to="/cart"
-              className="relative hover:text-indigo-600 transition"
-              aria-label="Cart"
-            >
+            <Link to="/cart" className="relative hover:text-indigo-600">
               <FontAwesomeIcon icon={faShoppingCart} className="w-6 h-6" />
-              <span className="absolute -right-2 -top-2 w-5 h-5 flex items-center justify-center bg-indigo-600 text-white text-xs font-semibold rounded-full">
-                3
-              </span>
+              {cartCount > 0 && (
+                <span className="absolute -right-2 -top-2 w-5 h-5 flex items-center justify-center bg-indigo-600 text-white text-xs rounded-full">
+                  {cartCount}
+                </span>
+              )}
             </Link>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="sm:hidden hover:text-indigo-600 transition"
-              aria-label="Open Mobile Menu"
+              className="sm:hidden hover:text-indigo-600"
             >
               <FontAwesomeIcon icon={faBars} className="w-6 h-6" />
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Sidebar */}
         <aside
-          className={`fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-lg transform transition-transform duration-300 sm:hidden z-50 ${
+          className={`fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-lg transform transition-transform duration-300 sm:hidden ${
             isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
-          role="dialog"
-          aria-modal="true"
         >
           <div className="flex justify-between items-center p-4 border-b">
             <img src={assets.logo} alt="Logo" className="w-28" />
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              aria-label="Close Mobile Menu"
-            >
+            <button onClick={() => setMobileMenuOpen(false)}>
               <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
             </button>
           </div>
@@ -264,21 +271,17 @@ const Navbar = () => {
 
       {/* Mobile Search Overlay */}
       {isSearchOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center sm:hidden">
-          <div className="bg-white rounded-lg p-4 w-11/12 max-w-md shadow-lg">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center sm:hidden">
+          <div className="bg-white p-4 rounded-lg w-11/12 max-w-md">
             <form onSubmit={handleSearchSubmit} className="flex">
               <input
                 type="text"
+                className="flex-grow border p-2 rounded-l-lg"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search..."
-                className="flex-grow border p-2 rounded-l-lg focus:outline-none"
-                autoFocus
+                placeholder="Search products..."
               />
-              <button
-                type="submit"
-                className="bg-indigo-600 text-white px-4 rounded-r-lg hover:bg-indigo-700"
-              >
+              <button className="bg-indigo-600 text-white px-4 rounded-r-lg">
                 Search
               </button>
             </form>
@@ -286,8 +289,7 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Page Content Wrapper */}
-      <div className="pt-20 px-4 sm:px-8">{/* Your page content */}</div>
+      <div className="pt-20 px-4 sm:px-8"></div>
     </>
   );
 };

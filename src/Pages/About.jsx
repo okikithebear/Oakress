@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import founder from "../assets/beauty1.jpg";
+
 const About = () => {
   const [activeTab, setActiveTab] = useState("founder");
 
@@ -31,14 +32,16 @@ const About = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="text-center max-w-3xl mx-auto"
+            className="text-center max-w-3xl mx-auto px-4"
           >
-            <h2 className="text-4xl font-semibold mb-6 text-yellow-800">
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-yellow-800">
               Our Legacy
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              For decades, our designs have celebrated the timeless beauty and
-              strength of women worldwide, weaving stories into every stitch.
+            <p className="text-gray-600 text-base md:text-lg leading-relaxed">
+              Oakress was born from a passion to celebrate the grace and strength of
+              African women. Each dress tells a story — a blend of heritage, artistry,
+              and modern elegance. Our legacy is woven in every fabric, stitch, and
+              silhouette, inspiring confidence, individuality, and timeless beauty.
             </p>
           </motion.div>
         );
@@ -51,14 +54,17 @@ const About = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="text-center max-w-3xl mx-auto"
+            className="text-center max-w-3xl mx-auto px-4"
           >
-            <h2 className="text-4xl font-semibold mb-6 text-yellow-800">
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-yellow-800">
               Our History
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              Founded in 2010, we began as a small atelier with a dream to
-              redefine modern elegance, one garment at a time.
+            <p className="text-gray-600 text-base md:text-lg leading-relaxed">
+              Since our humble beginnings in 2010, Oakress has grown from a small atelier
+              in Nigeria to a rising luxury brand recognized across Africa. Our founder’s
+              vision was simple — to redefine modern African elegance with designs that
+              honor tradition while embracing innovation. Every collection is a step
+              forward in our journey, crafted with care and passion.
             </p>
           </motion.div>
         );
@@ -71,41 +77,40 @@ const About = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="grid md:grid-cols-2 gap-12 items-start max-w-6xl mx-auto"
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start max-w-6xl mx-auto px-4"
           >
             <motion.img
               src={founder}
               alt="Jane Doe"
-              className="w-full h-auto object-cover rounded-2xl shadow-xl sticky top-24"
+              className="w-full h-auto object-cover rounded-2xl shadow-xl md:sticky md:top-24"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1, transition: { duration: 0.6 } }}
             />
-            <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
-              <h2 className="text-4xl font-bold text-yellow-800 mb-4">
+            <div className="space-y-6 text-gray-700 text-base md:text-lg leading-relaxed">
+              <h2 className="text-2xl md:text-4xl font-bold text-yellow-800 mb-4">
                 Jane Doe: Redefining Modern Elegance
               </h2>
               <p>
                 <strong>Jane Doe</strong>, the visionary behind{" "}
-                <strong>Oakress</strong>, founded the label with one clear
-                mission: to craft timeless pieces that celebrate femininity,
-                individuality, and the artistry of couture.
+                <strong>Oakress</strong>, founded the label with a mission to craft
+                timeless, empowering dresses that celebrate femininity, individuality,
+                and the artistry of couture.
               </p>
-              <h3 className="text-xl font-semibold text-yellow-700 uppercase">
+              <h3 className="text-lg md:text-xl font-semibold text-yellow-700 uppercase">
                 From Boardroom to Atelier
               </h3>
               <p>
-                Raised in a world where elegance was a way of life, Jane’s
-                passion for design began early. She honed her business acumen
-                before turning her focus to fashion, blending strategy and
-                artistry.
+                Raised with an eye for elegance, Jane combined business acumen with
+                creative flair, ensuring that Oakress balances strategy, innovation, and
+                artistry in every design.
               </p>
-              <h3 className="text-xl font-semibold text-yellow-700 uppercase">
+              <h3 className="text-lg md:text-xl font-semibold text-yellow-700 uppercase">
                 A Vision for the Future
               </h3>
               <p>
-                Jane remains committed to blending tradition with innovation —
-                championing sustainability and creating pieces that stand the
-                test of time.
+                Today, Jane continues to champion sustainability and authentic African
+                craftsmanship, designing dresses that empower women while leaving a
+                positive mark on the fashion industry.
               </p>
             </div>
           </motion.div>
@@ -119,14 +124,17 @@ const About = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="text-center max-w-3xl mx-auto"
+            className="text-center max-w-3xl mx-auto px-4"
           >
-            <h2 className="text-4xl font-semibold mb-6 text-yellow-800">
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-yellow-800">
               Our Impact
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              From sustainable sourcing to empowering artisans, we believe
-              fashion can be a force for good — creating beauty that lasts.
+            <p className="text-gray-600 text-base md:text-lg leading-relaxed">
+              Oakress is more than fashion — it’s a movement. By empowering local
+              artisans, sourcing sustainable materials, and embracing ethical practices,
+              we create dresses that make a difference. Our impact is felt in every
+              community we touch, fostering creativity, opportunity, and a love for
+              luxury African design.
             </p>
           </motion.div>
         );
@@ -137,18 +145,17 @@ const About = () => {
   };
 
   return (
-    <section className="w-full px-6 md:px-12 py-16 bg-gradient-to-b from-white to-yellow-50 relative">
-      {/* Section Heading */}
-      <h1 className="text-center text-5xl font-bold mb-12 text-gray-900">
+    <section className="w-full px-4 md:px-12 py-16 bg-gradient-to-b from-white to-yellow-50 relative">
+      <h1 className="text-center text-4xl md:text-5xl font-bold mb-12 text-gray-900">
         About Us
       </h1>
 
       {/* Tabs */}
-      <div className="flex overflow-x-auto gap-6 border-b border-gray-300 mb-12 justify-center scrollbar-hide">
+      <div className="flex overflow-x-auto gap-4 md:gap-6 border-b border-gray-300 mb-12 justify-start md:justify-center scrollbar-hide px-2 md:px-0">
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={`pb-2 relative text-lg md:text-xl font-medium tracking-wide transition-all duration-300 ${
+            className={`pb-2 relative text-base md:text-xl font-medium tracking-wide transition-all duration-300 ${
               activeTab === tab.id
                 ? "text-yellow-700 font-semibold"
                 : "text-gray-700 hover:text-yellow-700"
