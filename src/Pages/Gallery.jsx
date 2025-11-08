@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaShareAlt, FaTimes, FaPlay } from "react-icons/fa";
 
 // local video imports - keep your exact paths
-import dressesVideo from "../assets/vIDEOS/2.mov";
-import btsVideo from "../assets/vIDEOS/4.mov";
-import runwayVideo from "../assets/vIDEOS/5.mov";
+import dressesVideo from "../assets/Videos/2.mp4";
+import btsVideo from "../assets/Videos/4.mp4";
+import runwayVideo from "../assets/Videos/7.mp4";
 
 /*
   Video list

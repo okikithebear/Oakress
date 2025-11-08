@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Volume2, VolumeX } from "lucide-react";
-import editorialVideo from "../assets/videos/2.mov";
+import editorialVideo from "../assets/Videos/2.mp4";
 
 const Editorial = () => {
   const videoRef = useRef(null);
