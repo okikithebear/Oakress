@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
-import CollectionsPage from "./Pages/CollectionsPage";
+import Shop from "./Pages/Shop";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import Product from "./Pages/Product";
@@ -12,9 +12,10 @@ import Editorials from "./Components/Editorial";
 import Footer from "./Components/Footer";
 import ReadyToOrder from "./Components/ReadyToOrder";
 import OakdressMuse from "./Pages/Oakress";
+import CollectionsPage from "./Pages/CollectionsPage";
 import Cart from "./Pages/Cart";
 import Checkout from "./Pages/Checkout";
-import Bespoke from "./Pages/Bespoke";
+import Bookings from "./Pages/Bookings";
 import TheWayOfBeauty from "./Pages/Beauty";
 import ExploreNewTrends from "./Pages/Explore";
 import ShippingPolicy from "./Pages/ShippingPolicy";
@@ -28,6 +29,7 @@ import SkirtGuide from "./Pages/SkirtGuide";
 import SizeGuide from "./Pages/SizeGuide";
 import Profile from "./Pages/ProfileUser";
 import Gallery from "./Pages/Gallery";
+import AccountDetails from "./Pages/AccountsDetails";
 import ScrollToTop from "./Components/ScrollToTop"; // ⬅ import this
 
 const App = () => {
@@ -37,13 +39,14 @@ const App = () => {
       <ScrollToTop /> {/* ⬅ ensures each page starts from the top */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/collections" element={<CollectionsPage />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
      
         <Route path="/place-order" element={<PlaceOrder />} />
+        <Route path="/collections-page" element={<CollectionsPage />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/muse" element={<OakdressMuse />} />
         <Route path="/beauty" element={<TheWayOfBeauty />} />
@@ -57,13 +60,14 @@ const App = () => {
         <Route path="/verify" element={<Verify />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/gallery" element={<Gallery />} />
-        <Route path="/bespoke" element={<Bespoke />} />
+        <Route path="/bookings" element={<Bookings />} />
         <Route path="/readyorder" element={<ReadyToOrder />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/skirt-guide" element={<SkirtGuide />} />
         <Route path="/size-guide" element={<SizeGuide />} />
         <Route path="/thank-you" element={<ThankYou />} />
+        <Route path="/account-details" element={<AccountDetails />} />
       </Routes>
   
       <Footer />

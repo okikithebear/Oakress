@@ -19,17 +19,16 @@ const Contact = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Sending email using EmailJS
       await emailjs.send(
-        "YOUR_SERVICE_ID",      // replace with your EmailJS service ID
-        "YOUR_TEMPLATE_ID",     // replace with your EmailJS template ID
+        "service_oro0xje",      // Your Service ID
+        "template_zs1fo9f",   // Your Template ID
         {
           from_name: data.name,
           from_email: data.email,
           subject: data.subject,
           message: data.message,
         },
-        "YOUR_PUBLIC_KEY"       // replace with your EmailJS public key
+        "xQQ_Yl-x3WL3NKuTz"   // Your Public Key
       );
       setStatus("success");
       reset();
@@ -39,7 +38,6 @@ const Contact = () => {
     }
   };
 
-  // Lazy-load Google Map only when in view
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -95,7 +93,7 @@ const Contact = () => {
             <div className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-indigo-600" />
               <a href="mailto:support@oakdresses.com" className="hover:underline">
-                support@oakdresses.com
+                Oakress25@gmail.com
               </a>
             </div>
             <div className="flex items-center gap-3">
@@ -141,13 +139,13 @@ const Contact = () => {
                       placeholder=" "
                       className={`peer w-full pl-12 p-4 border ${
                         errors[id] ? "border-red-500" : "border-gray-300"
-                      } rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-transparent`}
+                      } rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-700 placeholder-transparent`}
                     />
                     <label
                       htmlFor={id}
                       className={`absolute left-12 text-gray-500 text-sm transition-all duration-200
-                        ${value ? "-translate-y-4 text-indigo-600 text-sm" : "top-4 text-gray-400 text-base"}
-                        peer-focus:-translate-y-4 peer-focus:text-indigo-600 peer-focus:text-sm bg-white px-1`}
+                        ${value ? "-translate-y-4 text-yellow-700 text-sm" : "top-4 text-gray-400 text-base"}
+                        peer-focus:-translate-y-4 peer-focus:text-yellow-700 peer-focus:text-sm bg-white px-1`}
                     >
                       {label}
                     </label>
@@ -170,13 +168,13 @@ const Contact = () => {
                   rows={5}
                   className={`peer w-full pl-12 p-4 border ${
                     errors.message ? "border-red-500" : "border-gray-300"
-                  } rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none placeholder-transparent`}
+                  } rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-700 resize-none placeholder-transparent`}
                 />
                 <label
                   htmlFor="message"
                   className={`absolute left-12 text-gray-500 text-sm transition-all duration-200
-                    ${watch("message") ? "-translate-y-4 text-indigo-600 text-sm" : "top-4 text-gray-400 text-base"}
-                    peer-focus:-translate-y-4 peer-focus:text-indigo-600 peer-focus:text-sm bg-white px-1`}
+                    ${watch("message") ? "-translate-y-4 text-yellow-700 text-sm" : "top-4 text-gray-400 text-base"}
+                    peer-focus:-translate-y-4 peer-focus:text-yellow-700 peer-focus:text-sm bg-white px-1`}
                 >
                   Your Message
                 </label>
@@ -190,7 +188,7 @@ const Contact = () => {
                 disabled={isSubmitting}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full flex justify-center items-center gap-2 py-4 bg-indigo-600 text-white font-semibold rounded-xl shadow-md hover:bg-indigo-500 transition disabled:opacity-50"
+                className="w-full flex justify-center items-center gap-2 py-4 bg-yellow-700 text-white font-semibold rounded-xl shadow-md hover:bg-yellow-800 transition disabled:opacity-50"
               >
                 {isSubmitting ? (
                   "Sending..."

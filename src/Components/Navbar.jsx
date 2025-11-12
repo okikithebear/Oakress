@@ -1,7 +1,6 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
-import { assets } from "../assets/assets";
+// src/Components/Navbar.jsx
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useCart } from "../Context/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -11,65 +10,71 @@ import {
   faTimes,
   faHome,
   faInfoCircle,
+  faSpa,
   faBox,
   faEnvelope,
   faPhotoFilm,
   faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAuth } from "../Context/AuthContext";
+import { toast } from "react-toastify";
 import { signOut } from "firebase/auth";
+
 import { auth } from "../firebase";
-import { toast } from "react-toastify"; // ✅ Toast import
+import { assets } from "../assets/assets";
+import { useAuth } from "../Context/AuthContext";
+import { useCart } from "../Context/CartContext";
+
+// Navigation Links
+const navLinks = [
+  { path: "/", label: "Home", icon: faHome },
+  { path: "/about", label: "About", icon: faInfoCircle },
+  { path: "/shop", label: "Shop", icon: faBox },
+  { path: "/gallery", label: "Gallery", icon: faPhotoFilm },
+ { path: "/collections-page", label: "Collections", icon: faSpa },
+  { path: "/bookings", label: "Bookings", icon: faClipboardList },
+  { path: "/contact", label: "Contact", icon: faEnvelope },
+];
+
+// Custom hook to close dropdowns/overlays on outside click or ESC
+const useOutsideClose = (refs, setStates) => {
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      refs.forEach((ref, i) => {
+        if (ref.current && !ref.current.contains(e.target)) setStates[i](false);
+      });
+    };
+    const handleEsc = (e) => e.key === "Escape" && setStates.forEach((fn) => fn(false));
+
+    document.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [refs, setStates]);
+};
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [isProfileOpen, setProfileOpen] = useState(false);
-  const { cartCount, products } = useCart(); // ✅ Fetch products here
+  const [searchQuery, setSearchQuery] = useState("");
 
+  const { cartCount, products } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
   const profileRef = useRef(null);
 
-  // ✅ Close profile dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (profileRef.current && !profileRef.current.contains(e.target)) {
-        setProfileOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  // Close profile dropdown on outside click or ESC
+  useOutsideClose([profileRef], [setProfileOpen]);
 
-  // ✅ Handle ESC key & scroll lock for overlays
+  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
-
-    const handleEsc = (e) => {
-      if (e.key === "Escape") {
-        setMobileMenuOpen(false);
-        setSearchOpen(false);
-        setProfileOpen(false);
-      }
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
   }, [isMobileMenuOpen]);
 
-  const navLinks = useMemo(
-    () => [
-      { path: "/", label: "Home", icon: faHome },
-      { path: "/about", label: "About", icon: faInfoCircle },
-      { path: "/collections", label: "Collection", icon: faBox },
-      { path: "/gallery", label: "Gallery", icon: faPhotoFilm },
-      { path: "/bespoke", label: "Bespoke", icon: faClipboardList },
-      { path: "/contact", label: "Contact", icon: faEnvelope },
-    ],
-    []
-  );
-
+  // Render navigation links
   const renderNavLinks = useCallback(
     (isMobile = false) =>
       navLinks.map(({ path, label, icon }) => (
@@ -78,72 +83,59 @@ const Navbar = () => {
           to={path}
           onClick={() => isMobile && setMobileMenuOpen(false)}
           className={({ isActive }) =>
-            `flex items-center gap-2 font-medium transition-all
-            ${isMobile ? "text-lg py-2" : "text-sm"}
-            hover:text-indigo-600 ${
-              isActive ? "text-indigo-600" : "text-gray-700"
-            }`
+            `flex items-center gap-2 transition-all font-medium ${
+              isMobile ? "text-lg py-2" : "text-sm"
+            } hover:text-yellow-600 ${isActive ? "text-yellow-600" : "text-gray-700"}`
           }
         >
           {isMobile && <FontAwesomeIcon icon={icon} className="w-5 h-5" />}
           {label}
         </NavLink>
       )),
-    [navLinks]
+    []
   );
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    navigate("/sign-in");
-  };
-
-  // ✅ Updated Search Logic
+  // Handle search submit
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
 
     const query = searchQuery.toLowerCase();
 
-    // ✅ First search products
-    const matchedProduct = products?.find((product) =>
-      product.name.toLowerCase().includes(query)
-    );
-
+    const matchedProduct = products?.find((p) => p.name.toLowerCase().includes(query));
     if (matchedProduct) {
       navigate(`/product/${matchedProduct.id}`);
-      setSearchQuery("");
-      setSearchOpen(false);
-      return;
-    }
-
-    // ✅ Fallback route search
-    const routesMap = {
-      home: "/",
-      about: "/about",
-      collection: "/collections",
-      collections: "/collections",
-      shop: "/collections",
-      contact: "/contact",
-      profile: "/profile",
-      cart: "/cart",
-      orders: "/orders",
-      signin: "/sign-in",
-      login: "/sign-in",
-    };
-
-    const matchedRoute = Object.keys(routesMap).find((key) =>
-      query.includes(key)
-    );
-
-    if (matchedRoute) {
-      navigate(routesMap[matchedRoute]);
     } else {
-      // ✅ Show toast if no match
-      toast.error("Product not found. Try a different search 🔍");
+      const routes = {
+        home: "/",
+        about: "/about",
+        collections: "/collections",
+        gallery: "/gallery",
+        booking: "/bespoke",
+        contact: "/contact",
+        profile: "/profile",
+        cart: "/cart",
+        orders: "/orders",
+        signin: "/sign-in",
+        login: "/sign-in",
+      };
+      const matchedRoute = Object.keys(routes).find((key) => query.includes(key));
+      matchedRoute ? navigate(routes[matchedRoute]) : toast.error("No results found 🔍");
     }
-
     setSearchQuery("");
     setSearchOpen(false);
+  };
+
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      toast.success("Logged out successfully");
+      navigate("/sign-in");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to logout");
+    }
   };
 
   return (
@@ -151,52 +143,45 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 w-full h-16 bg-white shadow-md z-50">
         <div className="flex items-center justify-between h-full px-4 sm:px-8 font-medium">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/">
             <img src={assets.logo} alt="Logo" className="w-32 sm:w-36" />
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <ul className="hidden sm:flex gap-8">{renderNavLinks()}</ul>
 
-          {/* Right Section */}
+          {/* Right Controls */}
           <div className="flex items-center gap-6">
-            {/* Search Desktop */}
-            <div className="hidden sm:block relative">
-              <form
-                onSubmit={handleSearchSubmit}
-                className="flex items-center border rounded-lg overflow-hidden"
-              >
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search..."
-                  className="px-3 py-1 text-sm w-40 focus:w-56 transition-all duration-300 outline-none"
-                />
-                <button
-                  type="submit"
-                  className="bg-indigo-600 text-white px-3 py-1 hover:bg-indigo-700"
-                >
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
-              </form>
-            </div>
+            {/* Desktop Search */}
+            <form
+              onSubmit={handleSearchSubmit}
+              className="hidden sm:flex items-center border rounded-lg overflow-hidden"
+            >
+              <input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search..."
+                className="px-3 py-1 text-sm w-40 focus:w-56 transition-all duration-300 outline-none"
+              />
+              <button type="submit" className="bg-yellow-600 text-white px-3 hover:bg-yellow-700">
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
+            </form>
 
             {/* Mobile Search */}
             <button
-              aria-label="Search"
-              onClick={() => setSearchOpen((prev) => !prev)}
-              className="sm:hidden hover:text-indigo-600 transition"
+              onClick={() => setSearchOpen((p) => !p)}
+              className="sm:hidden hover:text-yellow-600"
             >
-              <FontAwesomeIcon icon={faSearch} className="w-5 h-5" />
+              <FontAwesomeIcon icon={faSearch} />
             </button>
 
             {/* Profile */}
             <div className="relative" ref={profileRef}>
               <FontAwesomeIcon
                 icon={faUserCircle}
-                className="w-6 h-6 cursor-pointer hover:text-indigo-600"
-                onClick={() => setProfileOpen((prev) => !prev)}
+                className="w-6 h-6 cursor-pointer hover:text-yellow-600"
+                onClick={() => setProfileOpen((p) => !p)}
               />
               {isProfileOpen && (
                 <div className="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg">
@@ -209,18 +194,15 @@ const Navbar = () => {
                     </button>
                   ) : (
                     <>
-                      <button
-                        onClick={() => navigate("/profile")}
-                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      >
-                        My Profile
-                      </button>
-                      <button
-                        onClick={() => navigate("/orders")}
-                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      >
-                        Orders
-                      </button>
+                      {["/account-details",].map((path, i) => (
+                        <button
+                          key={i}
+                          onClick={() => navigate(path)}
+                          className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          {path === "/account-details" ? "My Account" : "Orders"}
+                        </button>
+                      ))}
                       <button
                         onClick={handleLogout}
                         className="block w-full text-left px-4 py-2 hover:bg-gray-100"
@@ -234,21 +216,18 @@ const Navbar = () => {
             </div>
 
             {/* Cart */}
-            <Link to="/cart" className="relative hover:text-indigo-600">
+            <Link to="/cart" className="relative hover:text-yellow-600">
               <FontAwesomeIcon icon={faShoppingCart} className="w-6 h-6" />
               {cartCount > 0 && (
-                <span className="absolute -right-2 -top-2 w-5 h-5 flex items-center justify-center bg-indigo-600 text-white text-xs rounded-full">
+                <span className="absolute -right-2 -top-2 w-5 h-5 flex items-center justify-center bg-yellow-600 text-white text-xs rounded-full">
                   {cartCount}
                 </span>
               )}
             </Link>
 
             {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="sm:hidden hover:text-indigo-600"
-            >
-              <FontAwesomeIcon icon={faBars} className="w-6 h-6" />
+            <button onClick={() => setMobileMenuOpen(true)} className="sm:hidden hover:text-yellow-600">
+              <FontAwesomeIcon icon={faBars} />
             </button>
           </div>
         </div>
@@ -262,7 +241,7 @@ const Navbar = () => {
           <div className="flex justify-between items-center p-4 border-b">
             <img src={assets.logo} alt="Logo" className="w-28" />
             <button onClick={() => setMobileMenuOpen(false)}>
-              <FontAwesomeIcon icon={faTimes} className="w-6 h-6" />
+              <FontAwesomeIcon icon={faTimes} />
             </button>
           </div>
           <ul className="flex flex-col p-6 gap-4">{renderNavLinks(true)}</ul>
@@ -275,21 +254,18 @@ const Navbar = () => {
           <div className="bg-white p-4 rounded-lg w-11/12 max-w-md">
             <form onSubmit={handleSearchSubmit} className="flex">
               <input
-                type="text"
                 className="flex-grow border p-2 rounded-l-lg"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products..."
+                placeholder="Search..."
               />
-              <button className="bg-indigo-600 text-white px-4 rounded-r-lg">
-                Search
-              </button>
+              <button className="bg-yellow-600 text-white px-4 rounded-r-lg">Search</button>
             </form>
           </div>
         </div>
       )}
 
-      <div className="pt-20 px-4 sm:px-8"></div>
+      <div className="pt-20" />
     </>
   );
 };

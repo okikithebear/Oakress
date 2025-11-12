@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Upload, Calendar, Send } from "lucide-react";
 import emailjs from "@emailjs/browser"; // npm i @emailjs/browser
 
-const BespokeOrder = () => {
+const Bookings = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,17 +19,55 @@ const BespokeOrder = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
+    if (files && files[0]) {
+      // Limit file size to 5MB
+      if (files[0].size > 5 * 1024 * 1024) {
+        setError("File is too large. Maximum size allowed is 5MB.");
+        return;
+      } else {
+        setError(""); // Clear any previous error
+      }
+    }
+
     setFormData({
       ...formData,
       [name]: files ? files[0] : value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(",")[1]); // remove prefix
+      reader.onerror = () => reject();
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Prevent submission if file too large
+    if (formData.file && formData.file.size > 5 * 1024 * 1024) {
+      setError("File is too large. Maximum size allowed is 5MB.");
+      return;
+    }
+
     setLoading(true);
     setError("");
     setSuccess(false);
+
+    let fileBase64 = "";
+    if (formData.file) {
+      try {
+        fileBase64 = await convertFileToBase64(formData.file);
+      } catch {
+        setError("Failed to read file.");
+        setLoading(false);
+        return;
+      }
+    }
 
     const templateParams = {
       name: formData.name,
@@ -37,15 +75,16 @@ const BespokeOrder = () => {
       eventType: formData.eventType,
       fabric: formData.fabric,
       notes: formData.notes,
+      attachment: fileBase64,
       fileName: formData.file ? formData.file.name : "No file uploaded",
     };
 
     emailjs
       .send(
-        "your_service_id", // replace with EmailJS service ID
-        "your_template_id", // replace with EmailJS template ID
+        "service_oro0xje",       // Your Service ID
+        "template_a7guit8",      // Your Template ID
         templateParams,
-        "your_public_key" // replace with EmailJS public key
+        "xQQ_Yl-x3WL3NKuTz"     // Your Public Key
       )
       .then(
         () => {
@@ -65,7 +104,7 @@ const BespokeOrder = () => {
   };
 
   return (
-    <section className="relative py-24 px-6 lg:px-20 bg-gradient-to-b from-white to-neutral-50 text-gray-900">
+    <section className="relative py-24 px-6 lg:px-20 bg-gradient-to-b from-white to-yellow-50 text-gray-900">
       {/* Header */}
       <motion.div
         className="max-w-4xl mx-auto text-center"
@@ -77,7 +116,8 @@ const BespokeOrder = () => {
           Made to Order
         </p>
         <h2 className="mt-4 text-4xl md:text-5xl font-bold tracking-tight">
-          Bespoke Dresses <span className="text-indigo-600">Made for You</span>
+          Bespoke Dresses{" "}
+          <span className="text-yellow-700 font-heading">Made for You</span>
         </h2>
         <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
           From sketch to final stitch, our atelier brings your vision to life.
@@ -103,7 +143,7 @@ const BespokeOrder = () => {
               required
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg bg-neutral-100 text-gray-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+              className="w-full px-4 py-3 rounded-lg bg-neutral-100 text-gray-900 focus:ring-2 focus:ring-yellow-700 outline-none"
               placeholder="Enter your name"
             />
           </div>
@@ -116,7 +156,7 @@ const BespokeOrder = () => {
               required
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg bg-neutral-100 text-gray-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+              className="w-full px-4 py-3 rounded-lg bg-neutral-100 text-gray-900 focus:ring-2 focus:ring-yellow-700 outline-none"
               placeholder="Enter your email"
             />
           </div>
@@ -130,7 +170,7 @@ const BespokeOrder = () => {
             value={formData.eventType}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 rounded-lg bg-neutral-100 text-gray-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+            className="w-full px-4 py-3 rounded-lg bg-neutral-100 text-gray-900 focus:ring-2 focus:ring-yellow-700 outline-none"
           >
             <option value="">Select occasion</option>
             <option>Wedding</option>
@@ -150,7 +190,7 @@ const BespokeOrder = () => {
             name="fabric"
             value={formData.fabric}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg bg-neutral-100 text-gray-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+            className="w-full px-4 py-3 rounded-lg bg-neutral-100 text-gray-900 focus:ring-2 focus:ring-yellow-700 outline-none"
           >
             <option value="">Choose fabric</option>
             <option>Silk</option>
@@ -168,7 +208,7 @@ const BespokeOrder = () => {
           </label>
           <div className="flex items-center space-x-4">
             <label className="flex items-center space-x-2 px-4 py-3 rounded-lg bg-neutral-100 cursor-pointer hover:bg-neutral-200 transition">
-              <Upload className="w-5 h-5 text-indigo-500" />
+              <Upload className="w-5 h-5 text-yellow-700" />
               <span>Upload file</span>
               <input
                 type="file"
@@ -179,9 +219,7 @@ const BespokeOrder = () => {
               />
             </label>
             {formData.file && (
-              <span className="text-sm text-gray-500">
-                {formData.file.name}
-              </span>
+              <span className="text-sm text-gray-500">{formData.file.name}</span>
             )}
           </div>
         </div>
@@ -196,7 +234,7 @@ const BespokeOrder = () => {
             value={formData.notes}
             onChange={handleChange}
             rows="4"
-            className="w-full px-4 py-3 rounded-lg bg-neutral-100 text-gray-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+            className="w-full px-4 py-3 rounded-lg bg-neutral-100 text-gray-900 focus:ring-2 focus:ring-yellow-700 outline-none"
             placeholder="Tell us about your ideas, measurements, or special requests..."
           />
         </div>
@@ -208,7 +246,7 @@ const BespokeOrder = () => {
             whileTap={{ scale: 0.95 }}
             type="submit"
             disabled={loading}
-            className="flex items-center px-8 py-4 bg-indigo-600 text-white rounded-full font-semibold shadow-lg hover:bg-indigo-500 transition disabled:opacity-50"
+            className="flex items-center px-8 py-4 bg-yellow-700 text-white rounded-full font-semibold shadow-lg hover:bg-yellow-800 transition disabled:opacity-50"
           >
             <Send className="w-5 h-5 mr-2" />
             {loading ? "Sending..." : "Submit Request"}
@@ -221,10 +259,12 @@ const BespokeOrder = () => {
             ✅ Your request has been sent successfully!
           </p>
         )}
-        {error && <p className="mt-6 text-red-600 text-center">⚠️ {error}</p>}
+        {error && (
+          <p className="mt-6 text-red-600 text-center">⚠️ {error}</p>
+        )}
       </motion.form>
 
-      {/* Extra: Consultation CTA */}
+      {/* Consultation CTA */}
       <div className="max-w-4xl mx-auto text-center mt-16">
         <p className="text-gray-600 mb-4">Prefer a one-on-one consultation?</p>
         <motion.a
@@ -232,7 +272,7 @@ const BespokeOrder = () => {
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}
-          className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-full font-medium shadow-lg hover:bg-indigo-500"
+          className="inline-flex items-center px-6 py-3 bg-yellow-700 text-white rounded-full font-medium shadow-lg hover:bg-yellow-800"
         >
           <Calendar className="w-5 h-5 mr-2" /> Book a Consultation
         </motion.a>
@@ -241,4 +281,4 @@ const BespokeOrder = () => {
   );
 };
 
-export default BespokeOrder;
+export default Bookings;

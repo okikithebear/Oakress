@@ -61,7 +61,7 @@ const About = () => {
             </h2>
             <p className="text-gray-600 text-base md:text-lg leading-relaxed">
               Since our humble beginnings in 2010, Oakress has grown from a small atelier
-              in Nigeria to a rising luxury brand recognized across Africa. Our founder’s
+              in Nigeria to a rising luxury. Our founder’s
               vision was simple — to redefine modern African elegance with designs that
               honor tradition while embracing innovation. Every collection is a step
               forward in our journey, crafted with care and passion.
@@ -88,19 +88,19 @@ const About = () => {
             />
             <div className="space-y-6 text-gray-700 text-base md:text-lg leading-relaxed">
               <h2 className="text-2xl md:text-4xl font-bold text-yellow-800 mb-4">
-                Jane Doe: Redefining Modern Elegance
+              Adetunmise Salisu: Redefining Modern Elegance
               </h2>
               <p>
-                <strong>Jane Doe</strong>, the visionary behind{" "}
+                <strong>Adetunmise Salisu </strong>, the visionary behind{" "}
                 <strong>Oakress</strong>, founded the label with a mission to craft
                 timeless, empowering dresses that celebrate femininity, individuality,
                 and the artistry of couture.
               </p>
               <h3 className="text-lg md:text-xl font-semibold text-yellow-700 uppercase">
-                From Boardroom to Atelier
+                From Thought to Thread
               </h3>
               <p>
-                Raised with an eye for elegance, Jane combined business acumen with
+                Raised with an eye for elegance, Adetunmise combined business acumen with
                 creative flair, ensuring that Oakress balances strategy, innovation, and
                 artistry in every design.
               </p>
@@ -108,7 +108,7 @@ const About = () => {
                 A Vision for the Future
               </h3>
               <p>
-                Today, Jane continues to champion sustainability and authentic African
+                Today, Adetunmise continues to champion sustainability and authentic African
                 craftsmanship, designing dresses that empower women while leaving a
                 positive mark on the fashion industry.
               </p>

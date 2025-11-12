@@ -12,15 +12,16 @@ const Cart = () => {
   const [orderNotes, setOrderNotes] = useState("");
 
   const handleCheckout = () => {
-  navigate("/checkout", {
-    state: {
-      cart,
-      total: calculateTotal(),
-      deliveryLocation,
-      orderNotes,
-    },
-  });
-};
+    navigate("/checkout", {
+      state: {
+        cart,
+        total: calculateTotal(),
+        deliveryLocation,
+        orderNotes,
+      },
+    });
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       {/* Heading */}
@@ -105,20 +106,19 @@ const Cart = () => {
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Delivery & Order Notes */}
             <div className="space-y-6">
-             {/* Delivery Location */}
-<div>
-  <label className="block mb-2 text-sm font-medium text-gray-700">
-    Delivery Address
-  </label>
-  <input
-    type="text"
-    value={deliveryLocation}
-    onChange={(e) => setDeliveryLocation(e.target.value)}
-    placeholder="Enter your full delivery address"
-    className="w-full border border-gray-200 rounded-2xl p-4 focus:ring-2 focus:ring-yellow-500 focus:outline-none shadow-sm"
-  />
-</div>
-
+              {/* Delivery Location */}
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  Delivery Address
+                </label>
+                <input
+                  type="text"
+                  value={deliveryLocation}
+                  onChange={(e) => setDeliveryLocation(e.target.value)}
+                  placeholder="Enter your full delivery address"
+                  className="w-full border border-gray-200 rounded-2xl p-4 focus:ring-2 focus:ring-yellow-700 focus:outline-none shadow-sm"
+                />
+              </div>
 
               {/* Order Notes */}
               <div>
@@ -127,7 +127,7 @@ const Cart = () => {
                   rows="4"
                   value={orderNotes}
                   onChange={(e) => setOrderNotes(e.target.value)}
-                  className="w-full border border-gray-200 rounded-2xl p-4 resize-none focus:ring-2 focus:ring-yellow-500 focus:outline-none shadow-sm"
+                  className="w-full border border-gray-200 rounded-2xl p-4 resize-none focus:ring-2 focus:ring-yellow-700 focus:outline-none shadow-sm"
                   placeholder="Any special instructions for your order?"
                 ></textarea>
               </div>
@@ -146,7 +146,6 @@ const Cart = () => {
                     alt="MasterCard"
                     className="h-8"
                   />
-                 
                 </div>
               </div>
             </div>
