@@ -1,11 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
-import editorial1 from "../assets/beauty.jpg";
-import editorial2 from "../assets/beauty.jpg";
-import editorial3 from "../assets/beauty.jpg";
-import editorial4 from "../assets/beauty.jpg";
-import editorial5 from "../assets/beauty.jpg";
-import editorial6 from "../assets/beauty.jpg";
+import editorial1 from "../assets/Actual product/Explore1.JPG";
+import editorial2 from "../assets/Actual product/Explore2.JPG";
+import editorial3 from "../assets/Actual product/Explore3.JPG";
+import editorial4 from "../assets/Actual product/Ad2.JPG";
+import editorial5 from "../assets/Actual product/Collection7.JPG";
+import editorial6 from "../assets/Actual product/Oakress 2.JPG";
 
 const editorials = [
   { title: "Runway Elegance", image: editorial1 },
