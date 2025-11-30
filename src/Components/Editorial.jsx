@@ -51,7 +51,7 @@ const Editorial = () => {
             {/* Buttons */}
             <div className="flex items-center gap-4 pt-4 flex-wrap">
               <Link
-                to="/collections"
+                to="/collections-page"
                 className="px-6 py-3 bg-white text-black text-sm font-medium tracking-wide uppercase hover:bg-gray-200 transition"
               >
                 Explore Collection
