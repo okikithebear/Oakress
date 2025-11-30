@@ -1,5 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   const fadeUp = (delay = 0) => ({
@@ -8,6 +10,17 @@ const Footer = () => {
     transition: { delay, duration: 0.6, ease: "easeOut" },
     viewport: { once: true },
   });
+
+  const socialLinks = [
+    {
+      name: "Instagram",
+      icon: faInstagram,
+      link: "https://www.instagram.com/oakress_?igsh=cHpwMGhwZGlzMms0",
+      color: "hover:text-black",
+    },
+    // Add more social links here if needed
+    // { name: "Facebook", icon: faFacebook, link: "https://...", color: "hover:text-blue-600" }
+  ];
 
   return (
     <footer className="relative py-20 px-6 sm:px-12 bg-white text-gray-700 border-t border-gray-200 overflow-hidden">
@@ -25,24 +38,18 @@ const Footer = () => {
             CONNECT WITH US
           </h3>
           <div className="flex space-x-6">
-  {[
-    {
-      name: "instagram",
-      color: "hover:text-black",
-      link: "https://www.instagram.com/oakress_?igsh=cHpwMGhwZGlzMms0",
-    },
-  ].map(({ name, color, link }) => (
-    <motion.a
-      key={name}
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={name}
-      whileHover={{ y: -3, scale: 1.1 }}
-      className={`text-gray-500 transition-all duration-300 ${color}`}
-    >
-      <i className={`fab fa-${name} text-2xl`}></i>
-    </motion.a>
+            {socialLinks.map(({ name, icon, link, color }) => (
+              <motion.a
+                key={name}
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={name}
+                whileHover={{ y: -3, scale: 1.1 }}
+                className={`text-gray-500 transition-all duration-300 ${color}`}
+              >
+                <FontAwesomeIcon icon={icon} className="text-2xl" />
+              </motion.a>
             ))}
           </div>
         </motion.div>
@@ -78,17 +85,26 @@ const Footer = () => {
           </h3>
           <ul className="space-y-3 text-sm">
             <li>
-              <a href="/about" className="hover:text-black hover:pl-1 transition-all duration-300">
+              <a
+                href="/about"
+                className="hover:text-black hover:pl-1 transition-all duration-300"
+              >
                 The Legacy
               </a>
             </li>
             <li>
-              <a href="/skirt-guide" className="hover:text-black hover:pl-1 transition-all duration-300">
+              <a
+                href="/skirt-guide"
+                className="hover:text-black hover:pl-1 transition-all duration-300"
+              >
                 Skirt Size
               </a>
             </li>
             <li>
-              <a href="/size-guide" className="hover:text-black hover:pl-1 transition-all duration-300">
+              <a
+                href="/size-guide"
+                className="hover:text-black hover:pl-1 transition-all duration-300"
+              >
                 Size Guide
               </a>
             </li>
