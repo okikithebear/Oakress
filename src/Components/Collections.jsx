@@ -12,7 +12,7 @@ const Collections = () => {
     { image: Muse, title: "THE OAKRESS MUSE", link: "/muse" },
     { image: Way, title: "THE WAY OF BEAUTY", link: "/beauty" },
     { image: Trends, title: "EXPLORE NEW TRENDS", link: "/trends" },
-    { image: Beauty1, title: "SHOP THE LATEST", link: "/collections" },
+    { image: Beauty1, title: "SHOP THE LATEST", link: "/collections-page" },
   ];
 
   return (
