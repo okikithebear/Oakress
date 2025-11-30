@@ -245,7 +245,7 @@ const Navbar = () => {
           }`}
         >
           <div className="flex justify-between items-center p-4 border-b">
-            <img src={assets.logo} alt="Logo" className="w-28" />
+            <img src={assets.Logo1} alt="Logo" className="w-28" />
             <button onClick={() => setMobileMenuOpen(false)}>
               <FontAwesomeIcon icon={faTimes} />
             </button>
