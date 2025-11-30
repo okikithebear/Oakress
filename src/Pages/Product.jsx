@@ -1,6 +1,7 @@
 // src/Pages/Product.jsx
-import { useContext, useEffect, useState, useCallback, useRef, useMemo } from "react";
+import { useContext, useEffect, useState, useCallback, useRef, useMemo,  } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+// import { motion, AnimatePresence } from "framer-motion";
 import { CartContext } from "../Context/CartContext";
 import { COLORS } from "../Components/colors"; 
 import { ukSizeOptions, heightOptions } from "../Components/SizeOptions";
@@ -59,6 +60,8 @@ Quantity.propTypes = {
   setValue: PropTypes.func.isRequired,
 };
 
+
+
 /* --- Recommended carousel (simple) --- */
 const Recommended = ({ items, onOpen }) => {
   if (!items || items.length === 0) return null;
@@ -108,6 +111,19 @@ export default function ProductPage() {
   const navigate = useNavigate();
   const { products, addToCart } = useContext(CartContext);
 
+  /* Device detection */
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const [lightboxOpen, setLightboxOpen] = useState(false);   // ✅ HERE
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [productData, setProductData] = useState(null);
   const [mainImage, setMainImage] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -119,6 +135,8 @@ export default function ProductPage() {
   const [bustMeasurement, setBustMeasurement] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [added, setAdded] = useState(false);
+  
+
   const productImageRef = useRef(null);
   const cartIconRef = useRef(document.getElementById("cart-icon"));
   const [activeTab, setActiveTab] = useState("Description");
@@ -146,55 +164,106 @@ export default function ProductPage() {
       .slice(0, 6);
   }, [productData, products]);
 
+  const isAddToCartDisabled = () => {
+  if (!selectedColor) return true;
+  if (!selectedSize) return true;
+  if (selectedSize === "Custom Size" && !customSize.trim()) return true;
+  if (!selectedHeight) return true;
+  if (selectedHeight === "Custom Height" && !customHeight.trim()) return true;
+  // if (isBusty && !bustMeasurement.trim()) return true;
+
+  return false; // everything valid → enabled
+};
+
   // Add to cart handler
   const handleAddToCart = () => {
-    if (!productData) return;
+  if (!productData) return;
 
-    const item = {
-      id: productData._id || productData.id,
-      name: productData.name,
-      price: productData.price,
-      image: productData.image?.[0] || productData.image,
-      quantity,
-      size: selectedSize === "Custom Size" ? customSize : selectedSize,
-      height: selectedHeight === "Custom Height" ? customHeight : selectedHeight,
-      color: selectedColor,
-      busty: isBusty,
-      bustMeasurement: isBusty ? bustMeasurement : undefined,
-    };
+  // BASIC VALIDATION
+  if (!selectedColor) {
+    alert("Please select a color.");
+    return;
+  }
 
-    addToCart(item);
+  if (!selectedSize) {
+    alert("Please select a size.");
+    return;
+  }
 
-    // toast / micro-interaction
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1400);
+  if (selectedSize === "Custom Size" && !customSize.trim()) {
+    alert("Please enter your custom size.");
+    return;
+  }
 
-    // fly-to-cart animation (graceful)
-    if (productImageRef.current && cartIconRef.current) {
-      const img = productImageRef.current.cloneNode(true);
-      const rect = productImageRef.current.getBoundingClientRect();
-      const cartRect = cartIconRef.current.getBoundingClientRect();
+  if (!selectedHeight) {
+    alert("Please select a height option.");
+    return;
+  }
 
-      Object.assign(img.style, {
-        position: "fixed",
-        left: `${rect.left}px`,
-        top: `${rect.top}px`,
-        width: `${rect.width}px`,
-        height: `${rect.height}px`,
-        transition: "transform 0.8s ease, opacity 0.8s ease",
-        zIndex: 9999,
-        borderRadius: "12px",
-      });
-      document.body.appendChild(img);
+  if (selectedHeight === "Custom Height" && !customHeight.trim()) {
+    alert("Please enter your custom height.");
+    return;
+  }
 
-      requestAnimationFrame(() => {
-        img.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.2)`;
-        img.style.opacity = "0.4";
-      });
+  // Busty is OPTIONAL, but if selected, measurement is required
+  if (isBusty && !bustMeasurement.trim()) {
+    alert("Please enter your bust adjustment measurement.");
+    return;
+  }
 
-      img.addEventListener("transitionend", () => img.remove(), { once: true });
-    }
-  };
+  // BUILD CART ITEM
+ const item = {
+  id: productData._id || productData.id,
+  name: productData.name,
+  price: productData.price,
+  image: productData.image?.[0] || productData.image,
+  quantity,
+  size: selectedSize === "Custom Size" ? customSize : selectedSize || null,
+  height: selectedHeight === "Custom Height" ? customHeight : selectedHeight || null,
+  color: selectedColor || null,
+  busty: isBusty || false,
+};
+
+// ⭐ Only attach bustMeasurement when busty is true AND user entered a value
+if (isBusty && bustMeasurement?.trim()) {
+  item.bustMeasurement = bustMeasurement.trim();
+}
+
+
+  // ADD TO CART
+  addToCart(item);
+
+  // SUCCESS TOAST
+  setAdded(true);
+  setTimeout(() => setAdded(false), 1400);
+
+  // FLY-TO-CART ANIMATION
+  if (productImageRef.current && cartIconRef.current) {
+    const img = productImageRef.current.cloneNode(true);
+    const rect = productImageRef.current.getBoundingClientRect();
+    const cartRect = cartIconRef.current.getBoundingClientRect();
+
+    Object.assign(img.style, {
+      position: "fixed",
+      left: `${rect.left}px`,
+      top: `${rect.top}px`,
+      width: `${rect.width}px`,
+      height: `${rect.height}px`,
+      transition: "transform 0.8s ease, opacity 0.8s ease",
+      zIndex: 9999,
+      borderRadius: "12px",
+    });
+    document.body.appendChild(img);
+
+    requestAnimationFrame(() => {
+      img.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.2)`;
+      img.style.opacity = "0.4";
+    });
+
+    img.addEventListener("transitionend", () => img.remove(), { once: true });
+  }
+};
+
 
   // Social share
   const handleShare = async () => {
@@ -264,6 +333,9 @@ const handleWhatsApp = () => {
                 alt={productData.name}
                 className="w-full h-full object-contain max-h-[70vh] sm:max-h-[60vh] transition-transform duration-500 hover:scale-105"
                 draggable={false}
+                onClick={() => {
+                  if (isMobile) setLightboxOpen(true);
+                }}
               />
             </div>
           </div>
@@ -294,7 +366,7 @@ const handleWhatsApp = () => {
           </div>
 
           <div className="flex items-baseline gap-4">
-            <div className="text-2xl font-bold">₦{productData.price?.toLocaleString()}</div>
+            <div className="text-2xl font-bold">£{productData.price?.toLocaleString()}</div>
             {productData.compareAt && <div className="text-sm line-through text-gray-400">₦{productData.compareAt?.toLocaleString()}</div>}
           </div>
 
@@ -399,12 +471,18 @@ const handleWhatsApp = () => {
             {/* Quantity + CTA */}
             <div className="flex items-center gap-4 mt-2">
               <Quantity value={quantity} setValue={setQuantity} />
-              <button
-                onClick={handleAddToCart}
-                className="flex-1 bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-900 transition"
-              >
-                Add to cart
-              </button>
+             <button
+  onClick={handleAddToCart}
+  disabled={isAddToCartDisabled()}
+  className={`w-full py-3 rounded-lg text-white font-semibold transition-all duration-300
+    ${isAddToCartDisabled() 
+      ? "bg-gray-400 cursor-not-allowed" 
+      : "bg-black hover:bg-gray-800 active:scale-95"}
+  `}
+>
+  Add to Cart
+</button>
+
             </div>
 
             {/* supplementary actions */}
@@ -422,6 +500,32 @@ const handleWhatsApp = () => {
           </div>
         </div>
       </section>
+     {/* Lightbox for mobile */}
+{isMobile && lightboxOpen && (
+  <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4">
+
+    {/* Close button */}
+    <button
+      className="absolute top-5 right-5 text-white text-3xl"
+      onClick={() => setLightboxOpen(false)}
+    >
+      ×
+    </button>
+
+    {/* Scrollable full-screen images */}
+    <div className="w-full h-full overflow-x-auto flex snap-x snap-mandatory space-x-4">
+      {productData.image.map((src, idx) => (
+        <img
+          key={idx}
+          src={src}
+          className="w-full h-full object-contain snap-center flex-shrink-0"
+          alt={`${productData.name} ${idx + 1}`}
+        />
+      ))}
+    </div>
+  </div>
+)}
+
 
       {/* Recommended products */}
       <Recommended items={recommended} onOpen={openRecommended} />

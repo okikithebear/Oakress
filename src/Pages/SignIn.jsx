@@ -4,7 +4,7 @@ import { Mail, Lock, User, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { auth, db } from '../firebase';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc} from 'firebase/firestore';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,7 +16,6 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const [userData, setUserData] = useState(null); // store Firestore user
   const navigate = useNavigate();
 
   const validationSchemas = {
@@ -53,19 +52,11 @@ const SignIn = () => {
       const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
       const user = userCredential.user;
 
-      // Fetch Firestore data
-      const userDocRef = doc(db, 'users', user.uid);
-      const userDocSnap = await getDoc(userDocRef);
+      // Store UID in localStorage so account page can fetch Firestore data
+      localStorage.setItem('uid', user.uid);
 
-      if (!userDocSnap.exists()) {
-        setError('User data not found in Firestore.');
-        return;
-      }
-
-      const userData = userDocSnap.data();
-      setUserData(userData);
       toast.success('Login successful! Redirecting...');
-      setTimeout(() => navigate('/account-details'), 2000);
+      setTimeout(() => navigate('/account-details'), 1000);
     } catch (err) {
       setError(err.message || 'Invalid login details!');
       toast.error(err.message || 'Invalid login details!');
@@ -83,13 +74,14 @@ const SignIn = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Save user to Firestore using UID as document ID
-      const userDoc = { uid: user.uid, name, email, createdAt: new Date() };
-      await setDoc(doc(db, 'users', user.uid), userDoc);
+      // Save user to Firestore
+      await setDoc(doc(db, 'users', user.uid), { uid: user.uid, name, email, createdAt: new Date() });
+
+      // Store UID in localStorage for account page
+      localStorage.setItem('uid', user.uid);
 
       setSuccessMessage('Account created successfully! Redirecting...');
-      setUserData(userDoc); // store userData immediately
-      setTimeout(() => navigate('/account-details'), 2000);
+      setTimeout(() => navigate('/account-details'), 1000);
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {
         setError('This email is already in use. Please login instead.');
@@ -137,22 +129,12 @@ const SignIn = () => {
                   : 'Reset your Oakress password'}
               </h1>
 
-              {userData && (
-                <p className="text-gray-700 mb-4">
-                  Welcome back, {userData.name}!
-                </p>
-              )}
               {error && <div className="text-red-500 mb-4">{error}</div>}
               {successMessage && <div className="text-green-500 mb-4">{successMessage}</div>}
 
               <Formik
-                initialValues={{
-                  name: userData?.name || '',
-                  email: userData?.email || '',
-                  password: ''
-                }}
+                initialValues={{ name: '', email: '', password: '' }}
                 validationSchema={validationSchemas[formMode]}
-                enableReinitialize
                 onSubmit={(values) => {
                   formMode === 'login'
                     ? handleLogin(values)
@@ -257,7 +239,7 @@ const SignIn = () => {
           </h2>
           <p className="text-gray-200 mb-8">
             {formMode === 'login'
-              ? 'Sign up and discover a great collection of backdrop designs!'
+              ? 'Sign up and discover a great collection of Artistic designs!'
               : 'Sign in to access your Oakress account and continue your journey!'}
           </p>
           <button

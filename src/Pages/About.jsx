@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import founder from "../assets/beauty1.jpg";
+import founder from "../assets/Logo1.jpeg";
 
 const About = () => {
   const [activeTab, setActiveTab] = useState("founder");

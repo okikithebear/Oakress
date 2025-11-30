@@ -22,7 +22,7 @@ const Hero = () => {
           </p>
 
 <button className="mt-6 px-8 py-3 text-sm tracking-wider border border-black hover:bg-black hover:text-white transition-all duration-300 ease-in-out uppercase">
-  <Link to="/collections" className="w-full h-full block">
+  <Link to="/collections-page" className="w-full h-full block">
     Shop Collection
   </Link>
 </button>

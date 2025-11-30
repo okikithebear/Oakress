@@ -111,7 +111,7 @@ const Navbar = () => {
         about: "/about",
         collections: "/collections",
         gallery: "/gallery",
-        booking: "/bespoke",
+        booking: "/bookings",
         contact: "/contact",
         profile: "/profile",
         cart: "/cart",
@@ -143,9 +143,15 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 w-full h-16 bg-white shadow-md z-50">
         <div className="flex items-center justify-between h-full px-4 sm:px-8 font-medium">
           {/* Logo */}
-          <Link to="/">
-            <img src={assets.logo} alt="Logo" className="w-32 sm:w-36" />
-          </Link>
+         <Link to="/">
+  <img
+    src={assets.Logo1}
+    alt="Logo"
+    className="w-14 sm:w-16 md:w-14 lg:w-16 h-auto object-contain"
+  />
+</Link>
+
+
 
           {/* Desktop Nav */}
           <ul className="hidden sm:flex gap-8">{renderNavLinks()}</ul>

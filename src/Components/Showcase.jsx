@@ -1,20 +1,20 @@
 "use client"; 
-import { useId, useState } from "react";
-import { ArrowRight, Instagram } from "lucide-react";
+// import { useId, useState } from "react";
+import { Instagram } from "lucide-react";
 import { motion } from "framer-motion";
 import beauty1 from "../assets/Actual product/Oakress 2.JPG";
 import beauty2 from "../assets/Actual product/Show.JPG";
 import beauty3 from "../assets/Actual product/Oakress 13.JPG";
 
 export default function Showcase() {
-  const [email, setEmail] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [status, setStatus] = useState("idle");
-  const [message, setMessage] = useState("");
-  const fieldId = useId();
-  const consentId = useId();
-  const helperId = useId();
-  const honeyId = useId();
+  // const [email, setEmail] = useState("");
+  // const [consent, setConsent] = useState(false);
+  // const [status, setStatus] = useState("idle");
+  // const [message, setMessage] = useState("");
+  // const fieldId = useId();
+  // const consentId = useId();
+  // const helperId = useId();
+  // const honeyId = useId();
 
   const IG_LINK = "https://www.instagram.com/oakress_?igsh=cHpwMGhwZGlzMms0";
 
@@ -24,33 +24,33 @@ export default function Showcase() {
     { src: beauty3, alt: "Crimson two-piece set at night venue" },
   ];
 
-  const isValidEmail = (val) => /\S+@\S+\.\S+/.test(val);
+  // const isValidEmail = (val) => /\S+@\S+\.\S+/.test(val);
 
-  async function handleSubscribe(e) {
-    e.preventDefault();
-    if ((e.currentTarget.elements.namedItem("company")?.value ?? "") !== "") return;
-    if (!isValidEmail(email)) {
-      setStatus("error");
-      setMessage("Enter a valid email address.");
-      return;
-    }
-    if (!consent) {
-      setStatus("error");
-      setMessage("Please agree to receive emails.");
-      return;
-    }
-    try {
-      setStatus("submitting");
-      await new Promise((r) => setTimeout(r, 600));
-      setStatus("success");
-      setMessage("Thanks! Check your inbox to confirm your subscription.");
-      setEmail("");
-      setConsent(false);
-    } catch {
-      setStatus("error");
-      setMessage("Something went wrong. Please try again.");
-    }
-  }
+  // async function handleSubscribe(e) {
+  //   e.preventDefault();
+  //   if ((e.currentTarget.elements.namedItem("company")?.value ?? "") !== "") return;
+  //   if (!isValidEmail(email)) {
+  //     setStatus("error");
+  //     setMessage("Enter a valid email address.");
+  //     return;
+  //   }
+  //   if (!consent) {
+  //     setStatus("error");
+  //     setMessage("Please agree to receive emails.");
+  //     return;
+  //   }
+  //   try {
+  //     setStatus("submitting");
+  //     await new Promise((r) => setTimeout(r, 600));
+  //     setStatus("success");
+  //     setMessage("Thanks! Check your inbox to confirm your subscription.");
+  //     setEmail("");
+  //     setConsent(false);
+  //   } catch {
+  //     setStatus("error");
+  //     setMessage("Something went wrong. Please try again.");
+  //   }
+  // }
 
   function onCardKeyDown(e) {
     if (e.key === "Enter" || e.key === " ") {
@@ -109,7 +109,7 @@ export default function Showcase() {
       </div>
 
       {/* Newsletter */}
-      <div className="max-w-2xl mx-auto mt-12 text-center">
+      {/* <div className="max-w-2xl mx-auto mt-12 text-center">
         <p className="text-base sm:text-lg text-gray-700">
           Be the first to know about new collections and exclusive offers.
         </p>
@@ -181,7 +181,7 @@ export default function Showcase() {
             {status === "success" && message}
           </p>
         </form>
-      </div>
+      </div> */}
     </section>
   );
 }

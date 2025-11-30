@@ -1,4 +1,3 @@
-// src/Context/CartContext.jsx
 import { createContext, useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { db, auth } from "../firebase";
@@ -22,150 +21,199 @@ export const CartProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [cartCount, setCartCount] = useState(0);
-  const [currency] = useState("₦");
+  const [currency] = useState("£");
   const [user, setUser] = useState(null);
   const [guestId, setGuestId] = useState(
     localStorage.getItem("guestId") || null
   );
 
-  // ✅ Ensure user/guest ID
+  // ⭐ Delivery States
+  const [deliveryFee, setDeliveryFee] = useState(0);
+  const [deliveryMethod, setDeliveryMethod] = useState("");
+
+  // Normalize ID
+  const normalizeId = (id) => (typeof id === "string" ? id : String(id));
+
+  // Auth / guest handling
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+
       if (!currentUser && !guestId) {
         const newGuestId = uuidv4();
         setGuestId(newGuestId);
         localStorage.setItem("guestId", newGuestId);
       }
     });
+
     return () => unsubscribe();
   }, [guestId]);
 
-  // ✅ Realtime Firestore cart sync
+  // Realtime Firestore sync
   useEffect(() => {
     if (!user && !guestId) return;
 
     const currentUserId = user ? user.uid : guestId;
     const cartRef = collection(db, "carts", currentUserId, "items");
 
-    const unsubscribeCart = onSnapshot(cartRef, (snapshot) => {
-      const cartItems = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setCart(cartItems);
-      const count = cartItems.reduce(
-        (acc, item) => acc + (item.quantity || 1),
-        0
-      );
-      setCartCount(count);
-    });
+    const unsubscribeCart = onSnapshot(
+      cartRef,
+      (snapshot) => {
+        const cartItems = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setCart(cartItems);
+
+        const count = cartItems.reduce(
+          (acc, item) => acc + (item.quantity || 1),
+          0
+        );
+        setCartCount(count);
+      },
+      (error) => {
+        console.error("Error fetching cart:", error);
+        toast.error("Error loading cart. Check your network.");
+      }
+    );
 
     return () => unsubscribeCart();
   }, [user, guestId]);
 
-  // ✅ Load products
+  // Load local product assets
   useEffect(() => {
     setProducts(productAssets);
   }, []);
 
-  // ✅ Add to cart
+  // Add to cart
   const addToCart = async (product) => {
     const currentUserId = user ? user.uid : guestId;
     const { id, size, height, busty, quantity, price } = product;
 
-    const variationKey = `${id}_${size || "default"}_${height || "default"}_${
-      busty ? "busty" : "normal"
-    }`;
-    const itemRef = doc(db, "carts", currentUserId, "items", variationKey);
+    const variationKey = `${normalizeId(id)}_${size || "default"}_${
+      height || "default"
+    }_${busty ? "busty" : "normal"}`;
 
+    const itemRef = doc(db, "carts", currentUserId, "items", variationKey);
     const existingItem = cart.find((item) => item.id === variationKey);
 
-    if (existingItem) {
-      const updatedQuantity = existingItem.quantity + (quantity || 1);
-      await setDoc(
-        itemRef,
-        {
-          quantity: updatedQuantity,
-          totalCost: price * updatedQuantity,
-        },
-        { merge: true }
-      );
-    } else {
-      await setDoc(
-        itemRef,
-        {
-          ...product,
-          id: variationKey,
-          quantity: quantity || 1,
-          totalCost: price * (quantity || 1),
-        },
-        { merge: true }
-      );
-    }
+    try {
+      if (existingItem) {
+        const updatedQuantity = existingItem.quantity + (quantity || 1);
 
-    toast.success("Item added to cart!");
+        await setDoc(
+          itemRef,
+          {
+            quantity: updatedQuantity,
+            totalCost: price * updatedQuantity,
+          },
+          { merge: true }
+        );
+      } else {
+        await setDoc(
+          itemRef,
+          {
+            ...product,
+            id: variationKey,
+            quantity: quantity || 1,
+            totalCost: price * (quantity || 1),
+          },
+          { merge: true }
+        );
+      }
+
+      toast.success("Item added to cart!");
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add item to cart.");
+    }
   };
 
-  // ✅ Remove product
+  // Remove item
   const removeFromCart = async (id) => {
     const currentUserId = user ? user.uid : guestId;
-    const itemRef = doc(db, "carts", currentUserId, "items", id);
+    const itemRef = doc(db, "carts", currentUserId, "items", normalizeId(id));
+
     try {
       await deleteDoc(itemRef);
+      toast.info("Item removed from cart.");
     } catch (error) {
-      console.error("Error removing item from cart:", error);
+      console.error("Error removing item:", error);
+      toast.error("Unable to remove item.");
     }
   };
 
-  // ✅ Clear cart
+  // Clear entire cart
   const clearCart = async () => {
     const currentUserId = user ? user.uid : guestId;
     const cartRef = collection(db, "carts", currentUserId, "items");
     const cartItems = await getDocs(cartRef);
-    cartItems.forEach((doc) => deleteDoc(doc.ref));
+
+    const deletions = cartItems.docs.map((docSnap) => deleteDoc(docSnap.ref));
+    await Promise.all(deletions);
+
+    toast.info("Cart cleared.");
   };
 
-  // ✅ Increase quantity
+  // Increase quantity
   const increaseQty = async (id) => {
     const currentUserId = user ? user.uid : guestId;
     const item = cart.find((i) => i.id === id);
     if (!item) return;
 
+    const updatedQty = item.quantity + 1;
     const itemRef = doc(db, "carts", currentUserId, "items", id);
+
     await setDoc(
       itemRef,
       {
-        quantity: item.quantity + 1,
-        totalCost: (item.quantity + 1) * item.price,
+        quantity: updatedQty,
+        totalCost: updatedQty * item.price,
       },
       { merge: true }
     );
   };
 
-  // ✅ Decrease quantity (min 1)
+  // Decrease quantity
   const decreaseQty = async (id) => {
     const currentUserId = user ? user.uid : guestId;
     const item = cart.find((i) => i.id === id);
     if (!item || item.quantity <= 1) return;
 
+    const updatedQty = item.quantity - 1;
     const itemRef = doc(db, "carts", currentUserId, "items", id);
+
     await setDoc(
       itemRef,
       {
-        quantity: item.quantity - 1,
-        totalCost: (item.quantity - 1) * item.price,
+        quantity: updatedQty,
+        totalCost: updatedQty * item.price,
       },
       { merge: true }
     );
   };
 
-  // ✅ Calculate total cost
+  // Calculate total items cost
   const calculateTotal = () => {
-    return cart.reduce(
-      (total, item) => total + item.price * (item.quantity || 1),
-      0
-    );
+    return cart.reduce((sum, item) => {
+      return sum + item.price * (item.quantity || 1);
+    }, 0);
+  };
+
+  // ⭐ Delivery method handler
+const setDeliveryMethodAndFee = (method) => {
+  setDeliveryMethod(method);
+
+  if (method === "express") setDeliveryFee(5);     // £5
+  else if (method === "standard") setDeliveryFee(3); // £3
+  else if (method === "pickup") setDeliveryFee(0);   // FREE
+  else setDeliveryFee(0);
+};
+
+
+  // ⭐ Grand total = cart total + delivery
+  const calculateTotalWithDelivery = () => {
+    return calculateTotal() + deliveryFee;
   };
 
   return (
@@ -179,7 +227,15 @@ export const CartProvider = ({ children }) => {
         clearCart,
         increaseQty,
         decreaseQty,
+
         calculateTotal,
+        calculateTotalWithDelivery,
+
+        // Delivery exports
+        deliveryFee,
+        deliveryMethod,
+        setDeliveryMethod: setDeliveryMethodAndFee,
+
         currency,
       }}
     >

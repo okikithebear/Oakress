@@ -5,26 +5,59 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Cart = () => {
-  const { cart, removeFromCart, increaseQty, decreaseQty, calculateTotal } = useCart();
+  const {
+    cart,
+    removeFromCart,
+    increaseQty,
+    decreaseQty,
+    calculateTotal,
+    deliveryFee,
+    setDeliveryMethod,
+    calculateTotalWithDelivery,
+  } = useCart();
+
   const navigate = useNavigate();
 
   const [deliveryLocation, setDeliveryLocation] = useState("");
-  const [orderNotes, setOrderNotes] = useState("");
+  // const [orderNotes, setOrderNotes] = useState("");
+  const [deliveryMethod, setLocalDeliveryMethod] = useState("");
+
+  const [errors, setErrors] = useState({
+    address: false,
+    method: false,
+  });
+
+  const [shake, setShake] = useState(false);
 
   const handleCheckout = () => {
+    const missingAddress = deliveryLocation.trim() === "";
+    const missingMethod = deliveryMethod === "";
+
+    if (missingAddress || missingMethod) {
+      setErrors({ address: missingAddress, method: missingMethod });
+
+      // Trigger framer motion shake
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+
+      return;
+    }
+
     navigate("/checkout", {
       state: {
         cart,
         total: calculateTotal(),
+        deliveryFee,
+        totalWithDelivery: calculateTotalWithDelivery(),
         deliveryLocation,
-        orderNotes,
+        // orderNotes,
+        deliveryMethod,
       },
     });
   };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      {/* Heading */}
       <h1 className="text-4xl sm:text-5xl font-extrabold mb-16 text-center text-gray-900 tracking-tight">
         Your Cart
       </h1>
@@ -42,7 +75,6 @@ const Cart = () => {
                 whileHover={{ y: -3, boxShadow: "0 15px 35px rgba(0,0,0,0.15)" }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                {/* Image */}
                 <motion.img
                   src={item.image || "/placeholder.png"}
                   alt={item.name}
@@ -52,11 +84,10 @@ const Cart = () => {
                   draggable={false}
                 />
 
-                {/* Details */}
                 <div className="flex-1 space-y-3">
                   <h2 className="text-xl md:text-2xl font-semibold text-gray-900">{item.name}</h2>
                   <p className="text-gray-700 font-medium text-lg">
-                    ₦{item.price.toLocaleString()}
+                    £{item.price.toLocaleString()}
                   </p>
                   <div className="text-sm text-gray-500 space-y-1">
                     {item.color && <p>Blouse Color: {item.color}</p>}
@@ -68,7 +99,6 @@ const Cart = () => {
                   </div>
                 </div>
 
-                {/* Quantity Controls */}
                 <div className="flex items-center gap-4 mt-4 md:mt-0">
                   <button
                     onClick={() => decreaseQty(item.id)}
@@ -85,54 +115,91 @@ const Cart = () => {
                   </button>
                 </div>
 
-                {/* Remove Button */}
                 <button
                   onClick={() => removeFromCart(item.id)}
                   className="text-gray-400 hover:text-red-500 ml-0 md:ml-4 transition"
-                  title="Remove Item"
                 >
                   <Trash2 size={24} />
                 </button>
 
-                {/* Item Total */}
                 <div className="text-lg md:text-xl font-semibold text-gray-900 ml-auto mt-4 md:mt-0">
-                  ₦{(item.price * item.quantity).toLocaleString()}
+                  £{(item.price * item.quantity).toLocaleString()}
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Order Notes + Delivery + Payment Summary */}
+          {/* Delivery / Notes / Summary */}
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Delivery & Order Notes */}
             <div className="space-y-6">
-              {/* Delivery Location */}
+              {/* Delivery Address */}
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-700">
                   Delivery Address
                 </label>
-                <input
+                <motion.input
+                  animate={errors.address ? { x: [-10, 10, -10, 10, 0] } : {}}
+                  transition={{ duration: 0.4 }}
                   type="text"
                   value={deliveryLocation}
-                  onChange={(e) => setDeliveryLocation(e.target.value)}
+                  onChange={(e) => {
+                    setDeliveryLocation(e.target.value);
+                    setErrors((prev) => ({ ...prev, address: false }));
+                  }}
                   placeholder="Enter your full delivery address"
-                  className="w-full border border-gray-200 rounded-2xl p-4 focus:ring-2 focus:ring-yellow-700 focus:outline-none shadow-sm"
+                  className={`w-full border rounded-2xl p-4 shadow-sm focus:ring-2 focus:ring-yellow-700 outline-none 
+                    ${
+                      errors.address
+                        ? "border-red-500 bg-red-50"
+                        : "border-gray-200 bg-white"
+                    }`}
                 />
               </div>
 
-              {/* Order Notes */}
+              {/* Delivery Method — ASOS/Zara Style */}
               <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  Delivery Method
+                </label>
+
+                <motion.select
+                  animate={errors.method ? { x: [-10, 10, -10, 10, 0] } : {}}
+                  transition={{ duration: 0.4 }}
+                  className={`w-full p-4 rounded-2xl font-medium shadow-sm outline-none transition
+                    appearance-none bg-white cursor-pointer
+                    ${
+                      errors.method
+                        ? "border-red-500 bg-red-50"
+                        : "border-gray-200 border"
+                    }
+                    focus:ring-2 focus:ring-yellow-700`}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setLocalDeliveryMethod(value);
+                    setDeliveryMethod(value);
+                    setErrors((prev) => ({ ...prev, method: false }));
+                  }}
+                >
+                  <option value="">Select a delivery option</option>
+                  <option value="standard">Standard Delivery — £3</option>
+                  <option value="express">Express Delivery — £5</option>
+                  <option value="pickup">Store Pickup — FREE</option>
+                </motion.select>
+              </div>
+
+              {/* Notes */}
+              {/* <div>
                 <label className="block mb-2 text-sm font-medium text-gray-700">Order Notes</label>
                 <textarea
                   rows="4"
                   value={orderNotes}
                   onChange={(e) => setOrderNotes(e.target.value)}
-                  className="w-full border border-gray-200 rounded-2xl p-4 resize-none focus:ring-2 focus:ring-yellow-700 focus:outline-none shadow-sm"
+                  className="w-full border border-gray-200 rounded-2xl p-4 resize-none focus:ring-2 focus:ring-yellow-700 outline-none shadow-sm"
                   placeholder="Any special instructions for your order?"
                 ></textarea>
-              </div>
+              </div> */}
 
-              {/* Stripe Payment Methods */}
+              {/* Payment Logos */}
               <div className="mt-4">
                 <p className="text-sm font-medium text-gray-700 mb-2">We accept:</p>
                 <div className="flex items-center gap-4">
@@ -150,25 +217,41 @@ const Cart = () => {
               </div>
             </div>
 
-            {/* Luxury Summary */}
+            {/* Summary */}
             <motion.div
+              animate={shake ? { x: [-12, 12, -12, 12, 0] } : {}}
+              transition={{ duration: 0.5 }}
               className="space-y-6 p-8 rounded-3xl shadow-2xl sticky top-28 bg-gradient-to-br from-yellow-50 via-white to-yellow-50"
-              whileHover={{ scale: 1.02, boxShadow: "0 25px 60px rgba(0,0,0,0.15)" }}
-              transition={{ duration: 0.4 }}
             >
               <div className="flex justify-between text-lg md:text-xl font-semibold text-gray-900">
-                <span>Total</span>
-                <span>₦{calculateTotal().toLocaleString()}</span>
+                <span>Subtotal</span>
+                <span>£{calculateTotal().toLocaleString()}</span>
               </div>
-              <p className="text-sm text-gray-500">
-                Taxes, discounts, and shipping calculated at checkout.
-              </p>
+
+              <div className="flex justify-between text-lg md:text-xl font-semibold text-gray-900">
+                <span>Delivery Fee</span>
+                <span>{deliveryFee === 0 ? "£0" : `£${deliveryFee.toLocaleString()}`}</span>
+              </div>
+
+              <hr />
+
+              <div className="flex justify-between text-2xl font-bold text-gray-900">
+                <span>Total</span>
+                <span>£{calculateTotalWithDelivery().toLocaleString()}</span>
+              </div>
+
               <button
                 onClick={handleCheckout}
                 className="w-full bg-yellow-700 text-white py-3 rounded-2xl text-lg font-semibold hover:bg-yellow-800 shadow-md transition"
               >
                 Proceed to Checkout
               </button>
+
+              {(errors.address || errors.method) && (
+                <p className="text-red-600 text-sm font-medium mt-2">
+                  Please complete all required fields before continuing.
+                </p>
+              )}
             </motion.div>
           </div>
         </>

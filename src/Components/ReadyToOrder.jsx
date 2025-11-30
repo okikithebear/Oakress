@@ -94,7 +94,7 @@ const ReadyOrder = () => {
           transition={{ duration: 0.8, delay: 0.18 }}
           className="mt-10 flex justify-center gap-4"
         >
-          <Link to="/bespoke" aria-label="Begin bespoke journey">
+          <Link to="/bookings" aria-label="Begin bespoke journey">
             <motion.button
               whileHover={{ translateY: -2 }}
               whileTap={{ scale: 0.98 }}

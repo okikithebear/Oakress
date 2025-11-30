@@ -14,11 +14,11 @@ import runwayVideo from "../assets/Videos/7.mp4";
 */
 const allVideos = [
   { id: 1, title: "Dresses Highlight", category: "Dresses", src: dressesVideo },
-  { id: 2, title: "Behind The Scenes", category: "BTS", src: btsVideo },
-  { id: 3, title: "Runway Show", category: "Runway", src: runwayVideo },
-  { id: 4, title: "Another Dress Style", category: "Dresses", src: dressesVideo },
-  { id: 5, title: "BTS Styling", category: "BTS", src: btsVideo },
-  { id: 6, title: "Runway Model Walk", category: "Runway", src: runwayVideo },
+  { id: 2, title: "Dresses Highlight", category: "BTS", src: btsVideo },
+  { id: 3, title: "Dresses Highlight", category: "Runway", src: runwayVideo },
+  { id: 4, title: "Dresses Highlight", category: "Dresses", src: dressesVideo },
+  { id: 5, title: "Dresses Highlight", category: "BTS", src: btsVideo },
+  { id: 6, title: "Dresses Highlight", category: "Runway", src: runwayVideo },
 ];
 
 const CATEGORIES = ["All", "Dresses", "BTS", "Runway"];
