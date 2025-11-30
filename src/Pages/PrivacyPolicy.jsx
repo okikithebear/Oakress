@@ -33,12 +33,13 @@ export default function PrivacyPolicy() {
 
         {/* Introduction */}
         <section className="pb-6 border-b border-gray-200">
-          <p>
-            At Oakress, your privacy is important to us. This Privacy Policy outlines how 
-            we collect, use, store, and protect your personal information in compliance 
-            with the <strong>Nigeria Data Protection Regulation (NDPR)</strong> and 
-            <strong> GDPR</strong> standards.
-          </p>
+         <p>
+  At Oakress, your privacy is important to us. This Privacy Policy outlines how 
+  we collect, use, store, and protect your personal information in compliance 
+  with the <strong>UK Data Protection Act 2018</strong> and the 
+  <strong>General Data Protection Regulation (GDPR)</strong>.
+</p>
+
         </section>
 
         {/* Information We Collect */}
