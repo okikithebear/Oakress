@@ -1,7 +1,6 @@
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import {
-  FaTimesCircle,
   FaUndoAlt,
   FaExchangeAlt,
   FaRulerCombined,
@@ -19,7 +18,7 @@ export default function ReturnRefundPolicy() {
         <title>Return & Refund Policy | Oakress</title>
         <meta
           name="description"
-          content="Review Oakress return and refund policy for made-to-order garments. Learn about cancellations, refunds, store credit, and custom order terms."
+          content="Read Oakress UK-compliant return, refund and exchange policy for ready-to-wear and custom clothing orders."
         />
         <link rel="canonical" href="https://oakress.com.ng/return-policy" />
       </Helmet>
@@ -39,133 +38,164 @@ export default function ReturnRefundPolicy() {
       </h1>
 
       <div className="max-w-3xl mx-auto space-y-10">
+
         {/* Intro */}
         <section className="pb-6 border-b border-gray-200">
           <p>
-            Thank you for choosing Oakress. Each piece is crafted with care and precision. Before placing your order, kindly review our{" "}
-            <span className="font-medium">Size Guide</span>, as all orders are considered final once placed. For any sizing assistance, our Client Care team is available prior to purchase.
+            Thank you for choosing Oakress. This policy outlines your rights under UK consumer law when purchasing Ready-to-Wear (RTW) pieces and custom clothing from us online. 
+            All orders are crafted with care. Please review our <span className="font-medium">Size Guide</span> and contact Client Care before purchasing if you need assistance.
           </p>
         </section>
 
-        {/* Cancellations */}
+        {/* 14-Day Cooling-Off (RTW) */}
         <section className="pb-6 border-b border-gray-200">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaTimesCircle className="text-purple-600" /> Order Cancellations
+            <FaUndoAlt className="text-purple-600" /> 
+            14-Day Right to Cancel (Ready-to-Wear)
           </h2>
           <p>
-            Cancellation requests must be submitted within <strong>12 hours</strong> of placing your order and before production begins.
-            Once production starts, cancellations will not be accepted.
+            Under the UK Consumer Contracts Regulations 2013, customers have the right to cancel any
+            <strong> Ready-to-Wear (RTW)</strong> online purchase within <strong>14 days</strong> of receiving the item — 
+            no reason required.
           </p>
-        </section>
+          <p className="mt-3">
+            You then have an additional <strong>14 days</strong> to return the item.
+          </p>
 
-        {/* Refunds */}
-        <section className="pb-6 border-b border-gray-200">
-          <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaUndoAlt className="text-purple-600" /> Refunds
-          </h2>
-          <p>
-            Refunds are granted <strong>only in cases of confirmed studio errors</strong>. Photo or video proof must be provided for review.
-          </p>
+          <p className="mt-3">Items returned under the cooling-off period must be:</p>
           <ul className="list-disc ml-6 mt-2 space-y-1">
-            <li>No cash refunds.</li>
-            <li>Approved refunds are issued as <strong>store credit only</strong>.</li>
-          </ul>
-          <p className="mt-3">Returned items must be:</p>
-          <ul className="list-disc ml-6 mt-2 space-y-1">
-            <li>Unworn, unused, and unaltered</li>
-            <li>Free from stains, perfume, or damage</li>
+            <li>Unused and in resalable condition</li>
+            <li>Unworn and unwashed</li>
+            <li>Free from makeup, perfume and damage</li>
             <li>Returned with original tags and packaging</li>
           </ul>
+
           <p className="mt-3">
-            Return requests must be submitted within <strong>7 days</strong> of delivery. Shipping fees are non-refundable.
+            Once we receive the returned item (or proof of postage), we will issue a <strong>full refund</strong> within
+            14 days, including the original standard delivery cost.
+          </p>
+
+          <p className="mt-3 text-sm italic">
+            *This statutory right does not apply to custom-made or personalised pieces.*
+          </p>
+        </section>
+
+        {/* Faulty Items – CRA2015 */}
+        <section className="pb-6 border-b border-gray-200">
+          <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
+            <FaInfoCircle className="text-purple-600" /> 
+            Faulty or Incorrect Items (Consumer Rights Act 2015)
+          </h2>
+          <p>
+            If your item arrives <strong>faulty, damaged, or not as described</strong>, you are entitled to a
+            <strong> full refund within 30 days</strong> of delivery under UK law.
+          </p>
+          <p className="mt-3">
+            After 30 days, and within the first 6 months, you are entitled to a repair or replacement. 
+            If neither is possible, a refund will be issued.
           </p>
         </section>
 
         {/* Exchanges */}
         <section className="pb-6 border-b border-gray-200">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaExchangeAlt className="text-purple-600" /> Exchanges
+            <FaExchangeAlt className="text-purple-600" /> 
+            Exchanges (RTW)
           </h2>
           <p>
-            Due to the made-to-order nature of our garments, we do not offer exchanges. Exceptions apply only in the case of verified production errors.
+            We offer exchanges on our Ready-to-Wear pieces if the item is returned in perfect condition.
+            Exchanges are not available for custom or made-to-measure garments unless a fault is confirmed.
           </p>
         </section>
 
         {/* Custom Orders */}
         <section className="pb-6 border-b border-gray-200">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaRulerCombined className="text-purple-600" /> Made-to-Measure Orders
+            <FaRulerCombined className="text-purple-600" /> 
+            Custom & Made-to-Measure Orders
           </h2>
           <p>
-            Custom pieces made using <strong>your provided measurements</strong> are not eligible for returns or refunds unless a confirmed studio error occurs.
+            Custom garments created using your provided measurements are <strong>not eligible</strong> for cancellations,
+            refunds, or exchanges under the 14-day cooling-off period.
+          </p>
+          <p className="mt-3">
+            However, you are fully protected under the Consumer Rights Act 2015 if the garment arrives faulty 
+            or not as described.
           </p>
         </section>
 
         {/* Adjustments */}
         <section className="pb-6 border-b border-gray-200">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaTools className="text-purple-600" /> Adjustments
+            <FaTools className="text-purple-600" /> 
+            Alterations & Fit Adjustments
           </h2>
           <p>
-            Post-delivery adjustments are the responsibility of the client. Alteration and shipping fees are covered by the customer.
+            Post-delivery adjustments for sizing or styling preferences are the responsibility of the client.
+            Alteration costs and additional shipping fees are covered by the customer.
           </p>
         </section>
 
         {/* Return Shipping */}
         <section className="pb-6 border-b border-gray-200">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaTruck className="text-purple-600" /> Return Shipping
+            <FaTruck className="text-purple-600" /> 
+            Return Shipping Costs
           </h2>
           <p>
-            Clients are responsible for return shipping fees. We strongly recommend using tracked shipping services. Oakress is not responsible for lost parcels.
+            For change-of-mind RTW returns, customers are responsible for return postage.
+            For faulty items, Oakress will cover or reimburse reasonable return postage costs.
           </p>
         </section>
 
-        {/* Customs */}
+        {/* International Duties */}
         <section className="pb-6 border-b border-gray-200">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaGlobeAfrica className="text-purple-600" /> Duties & Customs
+            <FaGlobeAfrica className="text-purple-600" /> 
+            International Duties & Customs
           </h2>
           <p>
-            International returns must have duties and taxes prepaid. Parcels with unpaid customs charges will be declined.
+            International returns must have duties and taxes prepaid. 
+            Parcels with unpaid customs charges will be declined.
           </p>
         </section>
 
         {/* Support */}
         <section className="pb-6 border-b border-gray-200">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaHeadset className="text-purple-600" /> Client Support
+            <FaHeadset className="text-purple-600" /> 
+            Customer Support
           </h2>
           <p>
-            For return or refund requests, contact{" "}
+            For returns, cancellations or faulty item reports, contact{" "}
             <a
               href="mailto:oakress@yahoo.com"
               className="text-purple-600 underline hover:text-purple-800"
             >
               oakress@yahoo.com
-            </a>
-            . Response time: 24–48 business hours.
+            </a>. You will receive a response within 24–48 business hours.
           </p>
         </section>
 
         {/* Notice */}
         <section>
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaInfoCircle className="text-purple-600" /> Policy Notice
+            <FaInfoCircle className="text-purple-600" /> 
+            Policy Notice
           </h2>
           <p>
-            Oakress reserves the right to modify this policy at any time to align with brand standards and service improvements.
+            This policy aligns with UK Consumer Law, including the Consumer Contracts Regulations 2013 
+            and the Consumer Rights Act 2015. Oakress may update this policy when required. 
+            This does not affect your statutory rights.
           </p>
         </section>
 
-        {/* Footer Note */}
+        {/* Footer */}
         <div className="pt-6 text-center">
           <p className="font-medium">With appreciation,</p>
           <p className="font-semibold tracking-wide">Oakress</p>
           <p className="italic text-gray-600">Crafted for the woman of quiet luxury.</p>
         </div>
-
-        
       </div>
     </div>
   );

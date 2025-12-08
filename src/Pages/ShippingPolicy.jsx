@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet"; 
 import { Link } from "react-router-dom";
 import { FaTruck, FaGlobeAfrica, FaBan, FaUndoAlt, FaEnvelope } from "react-icons/fa";
 
@@ -9,13 +9,13 @@ export default function ShippingPolicy() {
         <title>Shipping Policy | Oakress</title>
         <meta
           name="description"
-          content="Learn about Oakress shipping timelines, international delivery, processing time, and customer responsibilities regarding duties and customs."
+          content="Oakress UK shipping policy. Learn about delivery timelines, processing times, international shipping rules, customs duties, order cancellations, and return shipping responsibilities."
         />
         <meta
           name="keywords"
-          content="Oakress shipping, delivery policy, luxury brand Nigeria, international orders, processing time"
+          content="Oakress UK shipping, delivery policy UK, international shipping, UK consumer rights, processing time, customs duties"
         />
-        <link rel="canonical" href="https://oakress.com.ng/shipping-policy" />
+        <link rel="canonical" href="https://oakress.com/shipping-policy" />
       </Helmet>
 
       {/* Breadcrumb Navigation */}
@@ -31,13 +31,18 @@ export default function ShippingPolicy() {
 
       <div className="max-w-3xl mx-auto space-y-10">
 
-        {/* Domestic Shipping */}
+        {/* UK Domestic Shipping */}
         <section className="pb-6 border-b border-gray-200">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaTruck className="text-purple-600" /> Domestic Shipping (Nigeria)
+            <FaTruck className="text-purple-600" /> Domestic Shipping (United Kingdom)
           </h2>
           <p>
-            All Oakress pieces are made to order with precision and care. Please allow a standard processing time of <strong>7–10 business days</strong> before dispatch. Once shipped, a <strong>tracking number</strong> will be sent to your email.
+            Oakress operates from the United Kingdom, and all items are carefully made to order.
+            Please allow a standard processing time of <strong>7–10 business days</strong> before dispatch.
+          </p>
+          <p className="mt-2">
+            Once your order has been shipped, you will receive a <strong>tracking number</strong> via email.
+            Delivery time within the UK typically ranges from <strong>2–4 business days</strong> after dispatch.
           </p>
         </section>
 
@@ -47,20 +52,31 @@ export default function ShippingPolicy() {
             <FaGlobeAfrica className="text-purple-600" /> International Shipping
           </h2>
           <p>
-            We ship worldwide. Delivery time depends on your location and typically takes <strong>10–20 business days</strong>. Please note that international orders may experience delays due to <strong>customs clearance</strong>, which is beyond our control.
+            We ship worldwide from the United Kingdom. Delivery timelines vary by destination and
+            typically take <strong>10–20 business days</strong>. Transit delays caused by customs
+            inspections or local postal services are outside our control.
           </p>
           <p className="mt-2">
-            <strong>Customs & Duties:</strong> Import duties, taxes, and charges are <strong>not included</strong> in item prices or shipping costs. These charges are the responsibility of the customer.
+            <strong>Customs, Duties & Taxes:</strong> For orders shipped outside the UK, any import
+            duties, VAT, or customs charges applied by the destination country are the
+            <strong> customer&apos;s responsibility</strong>. These fees are not included in product or
+            shipping costs as required under international customs regulations.
           </p>
         </section>
 
-        {/* Order Cancellations */}
+        {/* Order Cancellations (UK Law Compliant) */}
         <section className="pb-6 border-b border-gray-200">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
             <FaBan className="text-purple-600" /> Order Cancellations
           </h2>
           <p>
-            Orders can only be canceled within <strong>12 hours</strong> after purchase. After production begins, cancellations or changes are not permitted as each piece is handcrafted on demand.
+            Because Oakress pieces are <strong>handmade to order</strong>, cancellation is only
+            permitted within <strong>12 hours</strong> of placing your order.
+          </p>
+          <p className="mt-2">
+            Under the UK Consumer Contracts Regulations, businesses are allowed to exempt
+            <strong> made-to-order or bespoke items</strong> from the standard 14-day cancellation
+            period. Once production begins, the order cannot be cancelled or amended.
           </p>
         </section>
 
@@ -70,7 +86,12 @@ export default function ShippingPolicy() {
             <FaUndoAlt className="text-purple-600" /> Return Shipping
           </h2>
           <p>
-            Customers are responsible for the cost of return shipping. We recommend using a <strong>tracked courier service</strong> as Oakress is not responsible for lost return shipments.
+            If a return is approved, the customer is responsible for the cost of return shipping,
+            in line with UK consumer legislation for made-to-order goods.
+          </p>
+          <p className="mt-2">
+            We strongly recommend using a <strong>tracked and insured courier service</strong>, as
+            Oakress cannot be held liable for lost or undelivered return parcels.
           </p>
         </section>
 
@@ -80,14 +101,14 @@ export default function ShippingPolicy() {
             <FaEnvelope className="text-purple-600" /> Need Help?
           </h2>
           <p>
-            For order assistance or shipping questions, reach out to our Client Care Team at{" "}
+            For questions about your order or shipping, please contact our Client Care Team at{" "}
             <a href="mailto:oakress@yahoo.com" className="text-purple-600 underline hover:text-purple-800">
               oakress@yahoo.com
             </a>.
           </p>
         </section>
 
-        {/* Policy Navigation */}
+        {/* Policy Signature */}
         <div className="pt-6 text-center">
           <p className="font-medium">With appreciation,</p>
           <p className="font-semibold tracking-wide">Oakress</p>

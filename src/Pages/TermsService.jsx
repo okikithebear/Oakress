@@ -8,11 +8,11 @@ export default function TermsOfService() {
         <title>Terms of Service | Oakress</title>
         <meta
           name="description"
-          content="Review the official Terms of Service for Oakress. Learn about user responsibilities, limitations of liability, and policies when using our website."
+          content="Read the official UK Terms of Service for Oakress. Understand your rights, responsibilities, and the legal framework governing the use of our website and services."
         />
         <meta
           name="keywords"
-          content="Oakress terms, Oakress legal, Terms of service Nigeria, ecommerce terms, Oakress policies"
+          content="Oakress UK terms, Oakress legal, UK terms of service, ecommerce terms UK, Oakress policies"
         />
       </Helmet>
 
@@ -28,74 +28,108 @@ export default function TermsOfService() {
           Terms of Service
         </h1>
         <p className="text-gray-600 mb-12 leading-relaxed">
-          These Terms of Service govern your use of our website and services. By accessing or purchasing from 
-          Oakress, you agree to comply with these terms.
+          These Terms of Service outline the rules and conditions for using the Oakress
+          website and purchasing our products. By accessing our website or making a
+          purchase, you agree to comply with these terms, as well as all applicable UK laws.
         </p>
 
         {/* Sections */}
         <div className="space-y-10 text-gray-800 leading-relaxed">
 
+          {/* Acceptance of Terms */}
           <section className="pb-8 border-b border-gray-200">
             <h2 className="text-2xl font-semibold mb-3">1. Acceptance of Terms</h2>
             <p>
-              By using this website, you confirm that you are at least 18 years old or have obtained consent 
-              from a legal guardian. If you disagree with any part of these terms, please discontinue use of 
-              our services immediately.
+              By using this website, you confirm that you are at least 18 years of age or
+              have permission from a legal guardian. If you do not agree with any section of
+              these Terms of Service, you must discontinue use of the website immediately.
             </p>
           </section>
 
+          {/* Website Use */}
           <section className="pb-8 border-b border-gray-200">
             <h2 className="text-2xl font-semibold mb-3">2. Use of Our Website</h2>
             <p>
-              You agree not to misuse our platform or engage in activities such as hacking, scraping, fraud, or 
-              unauthorized access. Oakress reserves the right to suspend accounts violating these rules.
+              You agree to use this website lawfully and responsibly in accordance with the
+              laws of England & Wales. Prohibited activities include hacking, data scraping,
+              fraudulent activity, attempts to bypass security systems, or any misuse that
+              may disrupt the website.
+            </p>
+            <p className="mt-2">
+              Oakress reserves the right to suspend or terminate access to users who violate
+              these terms or engage in behaviour that threatens the integrity of our platform.
             </p>
           </section>
 
+          {/* Product Info & Pricing */}
           <section className="pb-8 border-b border-gray-200">
             <h2 className="text-2xl font-semibold mb-3">3. Product Information & Pricing</h2>
             <p>
-              We make every effort to ensure product descriptions, images, and prices are accurate. However, we 
-              reserve the right to correct errors or update information without notice.
+              We strive to ensure all product descriptions, images, and prices are accurate
+              and up to date. However, errors may occasionally occur. Oakress reserves the
+              right to update or correct information at any time without prior notice,
+              including after an order has been placed.
             </p>
           </section>
 
+          {/* Orders & Payment */}
           <section className="pb-8 border-b border-gray-200">
             <h2 className="text-2xl font-semibold mb-3">4. Orders & Payment</h2>
             <p>
-              All orders are subject to acceptance and availability. Payment must be made using accepted methods 
-              listed at checkout. We reserve the right to cancel orders suspected of fraud.
+              All orders are subject to availability and confirmation. Prices and availability
+              may change without notice. Payments must be made using the methods displayed at
+              checkout.
+            </p>
+            <p className="mt-2">
+              We reserve the right to refuse or cancel any order that raises concerns about
+              fraud, misuse, or suspicious activity in line with UK e-commerce and fraud
+              prevention regulations.
             </p>
           </section>
 
+          {/* Intellectual Property */}
           <section className="pb-8 border-b border-gray-200">
             <h2 className="text-2xl font-semibold mb-3">5. Intellectual Property</h2>
             <p>
-              All content on Oakress, including text, graphics, logos, and images, is our property and protected 
-              by intellectual property laws. You may not replicate or distribute our content without permission.
+              All content on this website — including logos, product images, text, graphics,
+              and design elements — is the property of Oakress and protected under UK
+              intellectual property laws.
+            </p>
+            <p className="mt-2">
+              You may not reproduce, distribute, modify, or commercially exploit any of our
+              content without prior written permission.
             </p>
           </section>
 
+          {/* Limitation of Liability */}
           <section className="pb-8 border-b border-gray-200">
             <h2 className="text-2xl font-semibold mb-3">6. Limitation of Liability</h2>
             <p>
-              Oakress is not liable for indirect, incidental, or consequential damages arising from use of 
-              our services. Use the website at your own risk.
+              To the fullest extent permitted under UK law, Oakress shall not be held liable
+              for indirect, incidental, or consequential damages resulting from your use or
+              inability to use our website or services.
+            </p>
+            <p className="mt-2">
+              Nothing in these terms excludes liability for death or personal injury caused
+              by negligence, fraud, or any other liability that cannot be excluded under
+              the laws of England & Wales.
             </p>
           </section>
 
+          {/* Governing Law (Updated to UK) */}
           <section className="pb-8 border-b border-gray-200">
             <h2 className="text-2xl font-semibold mb-3">7. Governing Law</h2>
             <p>
-              These terms are governed by the laws of the Federal Republic of Nigeria. Any disputes will be 
-              settled in Nigerian courts.
+              These Terms of Service are governed by and interpreted in accordance with the
+              laws of England & Wales. Any disputes arising from the use of this website or
+              from purchases made through Oakress shall be resolved exclusively in the courts
+              of England & Wales.
             </p>
           </section>
-
         </div>
 
-        {/* Cross Links */}
-         <div className="pt-6 text-center">
+        {/* Signature */}
+        <div className="pt-6 text-center">
           <p className="font-medium">With appreciation,</p>
           <p className="font-semibold tracking-wide">Oakress</p>
           <p className="italic text-gray-600">Crafted for the woman of quiet luxury.</p>
