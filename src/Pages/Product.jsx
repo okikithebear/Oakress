@@ -581,7 +581,6 @@ const handleWhatsApp = () => {
         <ul className="mt-2 text-sm space-y-1">
           <li>• Processing time: 2 - 4 business days</li>
           <li>• Standard delivery: 5 - 10 business days</li>
-          <li>• Express delivery available at checkout</li>
         </ul>
       </div>
     )}
@@ -589,7 +588,7 @@ const handleWhatsApp = () => {
     {activeTab === "Returns" && (
       <div>
         <p>
-          We offer easy returns within <strong>14 days</strong> of delivery.
+          We offer easy returns within <strong>30 days</strong> of delivery.
           Items must be unused, with tags and in original packaging.
         </p>
         <p className="mt-2 text-sm">

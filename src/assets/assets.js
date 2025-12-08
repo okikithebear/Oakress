@@ -102,8 +102,8 @@ export const assets = {
 export const products = [
     {
         _id: "001",
-        name: "Women",
-        description: "A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.",
+        name: "RTW_1",
+        description: "A sleeveless, form-fitting mini dress crafted with delicate sheer lace detailing and a soft, sculpted bubble hem. Designed with thin adjustable straps and an elegant feminine silhouette, this ready-to-wear piece blends romantic lace textures with a structured, modern lower skirt for a refined, luxurious look.",
         price: 150,
         image: [p_img1,p_img2_1,p_img2_2,p_img2_3,p_img2_4],
         category: "Women",
