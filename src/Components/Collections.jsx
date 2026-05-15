@@ -1,4 +1,4 @@
-import Beauty1 from "../assets/Actual product/Beauty 1.JPG";
+import Beauty1 from "../assets/Actual product/Gem12.jpg";
 import Trends from "../assets/Actual product/Trends .JPG";
 import Muse from "../assets/Actual product/Muse .JPG";
 import Way from "../assets/Actual product/Way .JPG";

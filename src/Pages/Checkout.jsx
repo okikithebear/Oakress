@@ -1,12 +1,12 @@
 // src/Pages/Checkout.jsx
 import { useCart } from "../Context/CartContext";
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import { getNames } from "country-list";
 
 const Checkout = () => {
-  const { cart, calculateTotal, clearCart } = useCart();
-  const navigate = useNavigate();
+  const { cart, calculateTotal} = useCart();
+  // const navigate = useNavigate();
   const location = useLocation();
   const countryNames = getNames();
 
@@ -99,34 +99,48 @@ const Checkout = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const validationErrors = validate();
-    setErrors(validationErrors);
+  // 1. Validate form first
+  const validationErrors = validate();
+  setErrors(validationErrors);
+  if (Object.keys(validationErrors).length !== 0) return;
 
-   if (Object.keys(validationErrors).length === 0) {
-      // Build orderDetails object to pass to Thank You page
-      const orderDetails = {
-        customer: form,
-        cart: cart.map(item => ({
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          size: item.size || null,
-          color: item.color || null,
-          height: item.height || null,
-          bustMeasurement: item.bustMeasurement || null,
-        })),
-        deliveryFee: checkoutTotals.deliveryFee,
-        total: checkoutTotals.grandTotal,
-      };
+  try {
+    // 2. Initialize Stripe Checkout session (serverless)
+    const response = await fetch(
+      "/.netlify/functions/create-checkout",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: form.email,
+          deliveryFee: checkoutTotals.deliveryFee,
+          cart: cart.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+        }),
+      }
+    );
 
-      clearCart();
-      navigate("/thank-you", { state: orderDetails }); // ✅ pass order info
+    const data = await response.json();
+
+    // 3. Redirect customer to Stripe Checkout
+    if (data?.url) {
+      window.location.href = data.url;
+      return;
     }
-  };
+
+    throw new Error("Stripe session creation failed");
+  } catch (error) {
+    console.error("Checkout error:", error);
+    alert("Unable to start payment. Please try again.");
+  }
+};
 
   if (cart.length === 0) {
     return (

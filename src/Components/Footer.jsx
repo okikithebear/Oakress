@@ -118,7 +118,10 @@ const Footer = () => {
           </h3>
           <ul className="space-y-3 text-sm">
             <li className="text-gray-600 hover:text-black transition duration-300">
-              2025 – Her Garden of Graxe
+              2025 – Her Garden of Grace
+            </li>
+               <li className="text-gray-600 hover:text-black transition duration-300">
+              2026 – Gemini by Oakress
             </li>
           </ul>
         </motion.div>

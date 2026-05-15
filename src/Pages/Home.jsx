@@ -7,10 +7,12 @@ const Collections = lazy(() => import("../Components/Collections"));
 const Editorials = lazy(() => import("../Components/Editorial"));
 const ReadyOrder = lazy(() => import("../Components/ReadyToOrder"));
 const Showcase = lazy(() => import("../Components/Showcase"));
+const UpdateDesign = lazy(() => import("../Components/UpdateDesign"));
 
 // Sections array for DRY rendering
 const sections = [
   { Component: Hero, id: "hero" },
+    { Component: UpdateDesign, id: "update-design" },
   { Component: DesignDetails, id: "design-details" },
   { Component: Collections, id: "collections" },
   { Component: Editorials, id: "editorials" },

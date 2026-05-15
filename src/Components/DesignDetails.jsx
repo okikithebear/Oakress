@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import Title from "./Title";
 
-import Design1 from "../assets/Actual product/Design 1.JPG";
+import Design1 from "../assets/Actual product/Gem0.jpg";
 import Design2 from "../assets/Actual product/Oakress 2.JPG";
-import Design3 from "../assets/Actual product/Muse .JPG";
+import Design3 from "../assets/Actual product/Gemini 2.jpg";
 import Design4 from "../assets/Actual product/Design 4.JPG";
 import Design5 from "../assets/Actual product/Design 5.JPG";
 

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
 // Import hero and collection images
-import HeroImage from "../assets/Actual product/Oakress 2.JPG";
+import HeroImage from "../assets/Actual product/Gemini 8.jpg";
 import Collection1 from "../assets/Actual product/Collection1.JPG";
 import Collection2 from "../assets/Actual product/Collection2.JPG";
 import Collection3 from "../assets/Actual product/Collection3.JPG";
@@ -13,54 +13,112 @@ import Collection6 from "../assets/Actual product/Collection6.JPG";
 import Collection7 from "../assets/Actual product/Collection7.JPG";
 import Collection8 from "../assets/Actual product/Collection8.JPG";
 import Collection9 from "../assets/Actual product/Collection9.JPG";
+import Collection10 from "../assets/Actual product/Gem15.jpg";
+import Collection11 from "../assets/Actual product/Gemini 4.jpg";
+import Collection12 from "../assets/Actual product/Gemini 8.jpg";
+import Collection13 from "../assets/Actual product/Gemini 6.jpg";
+import Collection14 from "../assets/Actual product/Gemini 2.jpg";
+import Collection15 from "../assets/Actual product/Gem13.jpg";
+import Collection16 from "../assets/Actual product/Gem0.jpg";
 
 // Collection data
 const CollectionsPage = [
   {
-    
+    id: 1,
+    title: "Serenity Layers",
     description: "Sheer layers, soft palettes, and floral whispers of serenity.",
     image: Collection1,
   },
   {
-
+    id: 2,
+    title: "Threaded Luxury",
     description: "Delicate embroidery meets tactile luxury.",
     image: Collection2,
   },
   {
-
+    id: 3,
+    title: "Golden Hour Satin",
     description: "Where sunlight and satin meet in timeless elegance.",
     image: Collection3,
   },
   {
-
+    id: 4,
+    title: "Nocturne Bloom",
     description: "Night-blooming motifs with celestial undertones.",
     image: Collection4,
   },
   {
-
+    id: 5,
+    title: "Pure Form",
     description: "Sculpted silhouettes with whispers of purity.",
     image: Collection5,
   },
   {
-
+    id: 6,
+    title: "Soft Architecture",
     description: "Soft pastels entwined with structured grace.",
     image: Collection6,
   },
   {
- 
+    id: 7,
+    title: "Quiet Power",
     description: "A symphony of strength and allure.",
     image: Collection7,
   },
   {
-
+    id: 8,
+    title: "Muted Confidence",
     description: "Muted tones capturing quiet confidence.",
     image: Collection8,
   },
   {
- 
+    id: 9,
+    title: "Ethereal Rebirth",
     description: "An ode to ethereal beauty reborn.",
     image: Collection9,
   },
+  {
+    id: 10,
+    title: "Gemini Fragment",
+    description: "Modern distortion of classic silhouettes.",
+    image: Collection10,
+  },
+  {
+    id: 11,
+    title: "Dual Identity",
+    description: "Two worlds merged into one visual language.",
+    image: Collection11,
+  },
+  {
+    id: 12,
+    title: "Structured Drift",
+    description: "Chaos refined into tailored precision.",
+    image: Collection12,
+  },
+  {
+    id: 13,
+    title: "Neo Silk Motion",
+    description: "Fluid movement captured in fabric form.",
+    image: Collection13,
+  },
+  {
+    id: 14,
+    title: "The Gemini Form",
+    description: "The final expression of duality and design.",
+    image: Collection14,
+  },
+   {
+  id: 15,
+  title: "Celestial Motion",
+  description: "Fluid tailoring shaped through contrast, movement, and quiet intensity.",
+  image: Collection15,
+},
+{
+  id: 16,
+  title: "Eclipse Theory",
+  description: "An interplay of shadow, structure, and contemporary elegance.",
+  image: Collection16,
+},
 ];
 
 export default function HerGardenOfGrace() {
@@ -90,7 +148,7 @@ export default function HerGardenOfGrace() {
       <section className="relative h-[80vh] w-full flex flex-col items-center justify-center text-center overflow-hidden">
         <img
           src={HeroImage}
-          alt="Her Garden of Grace"
+          alt="Gemini by Oakress"
           className="absolute inset-0 w-full h-full object-cover opacity-50"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black"></div>
@@ -101,7 +159,7 @@ export default function HerGardenOfGrace() {
           transition={{ duration: 1 }}
           className="text-5xl md:text-7xl font-light tracking-[0.15em] mb-4 uppercase"
         >
-          2025 — Her Garden of Grace
+          2026 — Gemini
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}

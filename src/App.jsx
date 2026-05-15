@@ -28,6 +28,7 @@ import Verify from "./Pages/Verify";
 import SkirtGuide from "./Pages/SkirtGuide";
 import SizeGuide from "./Pages/SizeGuide";
 import Profile from "./Pages/ProfileUser";
+import UpdateDesign from "./Components/UpdateDesign";
 import Gallery from "./Pages/Gallery";
 import AccountDetails from "./Pages/AccountsDetails";
 import ScrollToTop from "./Components/ScrollToTop"; // ⬅ import this
@@ -47,6 +48,7 @@ const App = () => {
      
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/collections-page" element={<CollectionsPage />} />
+         <Route path="/update-design" element={<UpdateDesign />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/muse" element={<OakdressMuse />} />
         <Route path="/beauty" element={<TheWayOfBeauty />} />
